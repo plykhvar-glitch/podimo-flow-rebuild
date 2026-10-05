@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<title>Growth Audit — Podimo</title>
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: only dark;
+  /* ---- Podimo, extracted from their live screens ---- */
+  --pd-bg:#010103; --pd-card:#2C2B30; --pd-field:#242328; --pd-row:#0F0E12; --pd-line:#232228;
+  --pd-purple:#794AF9; --pd-purple-dk:#673DEA; --pd-purple-soft:rgba(121,74,249,.18);
+  --pd-ink:#FFFFFF; --pd-ink2:#E6E4E8; --pd-sub:#A9A6AA; --pd-muted:#6F6C73;
+  --pd-btn-off:#3A2C6E;
+  --r-ctl:14px; --r-media:18px;
+  /* ---- the report shell, in Podimo's own palette (dark app, dark shell) ---- */
+  --bg:#060509; --bg2:#121116; --surf:#141318;
+  --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16);
+  --ink:#FFFFFF; --ink2:#C9C6CC; --ink3:#8C8990;
+  --accent:#794AF9; --accent-lift:#A98BFF;
+  --panel:#FFFFFF; --panel-ink:#141218; --panel-muted:#5F5C66; --panel-line:#ECEAF0;
+  --accent-ink:#5A2FE0;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:700px){.wrap{padding:0 20px}}
+
+/* ============ top bar ============ */
+.nav{position:sticky;top:0;z-index:70;background:rgba(6,5,9,.86);backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid var(--hair)}
+.nav-in{max-width:1080px;margin:0 auto;padding:0 32px;height:58px;display:flex;align-items:center;gap:18px}
+@media(max-width:700px){.nav-in{padding:0 20px;gap:12px}}
+.nav-brand{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.nav-brand img{width:26px;height:26px;border-radius:7px;display:block;flex:none}
+.nav-brand span{color:var(--ink2);font-weight:500}
+.nav-brand b{color:var(--ink);font-weight:600}
+.nav-links{margin-left:auto;display:flex;gap:2px;align-items:center}
+.nav-links button{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--ink3);transition:.16s}
+.nav-links button:hover{color:var(--ink)}
+.nav-links button.on{color:var(--ink);background:#2C2B30}
+@media(max-width:640px){.nav-brand span{display:none}}
+
+.view{display:none}
+.view.on{display:block}
+
+/* ============ hero ============ */
+.hero{padding:104px 0 0;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-340px;left:50%;transform:translateX(-50%);
+  width:1100px;height:640px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(121,74,249,.34),transparent 72%)}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(36% 46% at 6% 22%,rgba(121,74,249,.12),transparent 70%),
+   radial-gradient(34% 42% at 94% 16%,rgba(185,140,255,.10),transparent 70%)}
+.hero>*{position:relative;z-index:1}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-lift);margin-bottom:26px}
+.hero h1{font-size:76px;line-height:.98;font-weight:700;letter-spacing:-.045em;margin:0 0 24px}
+@media(max-width:820px){.hero h1{font-size:50px}.hero{padding-top:70px}}
+.hero .lede{font-size:20px;line-height:1.5;font-weight:400;color:var(--ink2);max-width:600px;margin:0 auto;letter-spacing:-.012em}
+@media(max-width:820px){.hero .lede{font-size:17px}}
+.hero .meta{margin-top:30px;font-size:12.5px;color:var(--ink3);letter-spacing:.02em}
+.hero .meta b{color:var(--ink2);font-weight:600}
+
+.stats{display:flex;justify-content:center;gap:0;margin:70px auto 0;max-width:760px;
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.stat{flex:1;padding:26px 14px;text-align:center;border-left:1px solid var(--hair)}
+.stat:first-child{border-left:none}
+.stat b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.stat span{display:block;font-size:11.5px;color:var(--ink3);margin-top:5px;line-height:1.35}
+@media(max-width:700px){.stat b{font-size:19px}.stat{padding:18px 8px}}
+
+.fb{max-width:760px;margin:0 auto;padding:30px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:26px;text-align:left}
+@media(max-width:700px){.fb{grid-template-columns:1fr;gap:20px;padding-top:24px}}
+.fb-k{grid-column:1/-1;font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink3);text-align:center;margin-bottom:-6px}
+.fb-i{display:flex;gap:12px;align-items:flex-start}
+.fb-i .tick{width:18px;height:18px;flex:none;margin-top:3px;border-radius:50%;background:rgba(121,74,249,.24);
+  display:grid;place-items:center}
+.fb-i .tick svg{width:10px;height:10px;stroke:var(--accent-lift);stroke-width:3;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.fb-i p{font-size:14px;line-height:1.55;color:var(--ink2);margin:0}
+.fb-i p b{color:var(--ink);font-weight:700}
+
+.sec{padding:96px 0}
+.sec-k{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px}
+.sec h2{font-size:38px;line-height:1.14;font-weight:700;letter-spacing:-.035em;margin:0 0 20px;max-width:680px}
+@media(max-width:820px){.sec h2{font-size:29px}.sec{padding:64px 0}}
+.sec p.body{font-size:17px;line-height:1.66;color:var(--ink2);max-width:640px;margin:0 0 18px;letter-spacing:-.008em}
+.sec p.body b{color:var(--ink);font-weight:600}
+.rule{height:1px;background:var(--hair);margin:0}
+
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;max-width:820px}
+@media(max-width:760px){.notes{grid-template-columns:1fr}}
+.note{background:var(--surf);border:1px solid var(--hair);border-radius:16px;padding:24px 26px}
+.note h4{font-size:15px;font-weight:700;letter-spacing:-.015em;margin:0 0 8px}
+.note p{font-size:14px;line-height:1.6;color:var(--ink2);margin:0}
+
+.ideas{display:flex;flex-direction:column;gap:0;margin-top:14px;border-top:1px solid var(--hair)}
+.idea{display:grid;grid-template-columns:52px 1fr 190px;gap:26px;align-items:start;
+  padding:30px 4px;border-bottom:1px solid var(--hair);text-align:left;width:100%;transition:.18s}
+.idea:hover{background:rgba(255,255,255,.03)}
+@media(max-width:780px){.idea{grid-template-columns:38px 1fr;gap:16px}}
+.idea .no{font-size:13px;font-weight:700;color:var(--ink3);padding-top:4px;letter-spacing:.02em}
+.idea h3{font-size:21px;line-height:1.25;font-weight:700;letter-spacing:-.024em;margin:0 0 7px}
+@media(max-width:820px){.idea h3{font-size:18px}}
+.idea p{font-size:14.5px;line-height:1.6;color:var(--ink2);margin:0;max-width:540px}
+.idea .out{text-align:right;padding-top:3px}
+@media(max-width:780px){.idea .out{grid-column:2;text-align:left;padding-top:12px}}
+.idea .out b{display:block;font-size:19px;font-weight:700;letter-spacing:-.025em;color:var(--accent-lift);white-space:nowrap}
+.idea .out span{display:block;font-size:10.5px;color:var(--ink3);margin-top:3px;letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.idea .seeit{display:inline-flex;align-items:center;gap:5px;margin-top:11px;font-size:12.5px;
+  font-weight:600;color:var(--accent-lift)}
+.idea .seeit svg{width:12px;height:12px}
+
+.band{background:var(--surf);border:1px solid var(--hair);border-radius:28px;padding:40px 44px;margin-top:44px;
+  display:flex;align-items:center;gap:36px;flex-wrap:wrap}
+@media(max-width:700px){.band{padding:28px 24px;gap:22px}}
+.band .lab{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.band .txt{flex:1;min-width:240px}
+.band .txt p{font-size:15.5px;line-height:1.6;color:var(--ink2);margin:0}
+.band .nums{display:flex;gap:34px}
+.band .nums div b{display:block;font-size:30px;font-weight:700;letter-spacing:-.035em;color:var(--accent-lift)}
+.band .nums div span{display:block;font-size:11px;color:var(--ink3);margin-top:2px;letter-spacing:.04em;
+  text-transform:uppercase;font-weight:600}
+
+.cta-row{display:flex;justify-content:center;align-items:center;gap:22px;flex-wrap:wrap;margin-top:52px}
+.bigbtn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+  font-size:15px;font-weight:700;letter-spacing:-.01em;padding:15px 26px;border-radius:30px;transition:.16s;order:1}
+.bigbtn:hover{filter:brightness(1.1)}
+.bigbtn svg{width:15px;height:15px}
+.foot{border-top:1px solid var(--hair);padding:36px 0 70px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+
+.herobtns{display:flex;justify-content:center;margin-top:30px}
+.ghostbtn{display:inline-flex;align-items:center;gap:10px;background:#141318;border:1px solid var(--hair2);color:var(--ink);font-size:14px;
+  font-weight:700;padding:9px 20px 9px 9px;border-radius:30px;transition:.16s}
+.ghostbtn:hover{border-color:rgba(255,255,255,.3)}
+.ghostbtn .pl{width:30px;height:30px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+.ghostbtn .pl svg{width:12px;height:12px;fill:#fff;margin-left:2px}
+
+/* ============ prototype stage ============ */
+.stage{display:grid;grid-template-columns:minmax(440px,1fr) minmax(400px,470px);gap:0;
+  align-items:start;min-height:calc(100vh - 58px)}
+@media(max-width:1080px){.stage{grid-template-columns:1fr}}
+.phonecol{padding:34px 24px 46px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.panelcol{border-left:1px solid var(--hair);background:var(--panel);color:var(--panel-ink);
+  min-height:calc(100vh - 58px);position:sticky;top:58px;max-height:calc(100vh - 58px);overflow-y:auto}
+@media(max-width:1080px){.panelcol{position:static;max-height:none;border-left:none;border-top:1px solid var(--hair)}}
+
+.phone{position:relative;width:390px;height:844px;flex:none;background:#000;border:11px solid #000;
+  border-radius:46px;box-shadow:0 0 0 1.5px #34323A,0 34px 80px -22px rgba(121,74,249,.35)}
+.phone-in{position:absolute;inset:0;border-radius:36px;overflow:hidden;background:var(--pd-bg)}
+.island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:104px;height:30px;background:#000;
+  border-radius:16px;z-index:60;pointer-events:none}
+.sbar{position:absolute;top:0;left:0;right:0;height:50px;z-index:55;pointer-events:none;display:flex;
+  align-items:center;justify-content:space-between;padding:14px 28px 0 34px;font:600 15px/1 'Inter',sans-serif;color:#fff;transition:color .3s}
+.sbar.dk{color:#111}
+.sbar .glyphs{display:flex;gap:5px;align-items:center}
+.homebar{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;
+  border-radius:3px;background:rgba(255,255,255,.92);z-index:56;pointer-events:none;transition:background .3s}
+.homebar.dk{background:#111}
+.screenwrap{position:absolute;inset:0;overflow:hidden;background:var(--pd-bg)}
+
+/* ============ phone screens — Podimo's system, all prefixed scr-/pd- ============ */
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--pd-bg);color:var(--pd-ink);
+  font-family:'Inter',-apple-system,sans-serif;
+  transform:translateX(100%);transition:transform .36s cubic-bezier(.32,.72,0,1);z-index:10;will-change:transform}
+.scr.is-active{transform:translateX(0);z-index:20}
+.scr.is-past{transform:translateX(-24%)}
+.scr.sheet{transform:translateY(100%)}
+.scr.sheet.is-active{transform:translateY(0);z-index:30}
+.scr.nofx{transition:none}
+.scr-top{flex:none;padding:54px 18px 0;position:relative;z-index:2}
+.scr-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 18px;scrollbar-width:none;position:relative;z-index:2}
+.scr-body::-webkit-scrollbar{display:none}
+.scr-foot{flex:none;padding:10px 18px 30px;position:relative;z-index:2}
+
+/* header chrome: purple back arrow, dash progress, skip arrow */
+.pd-nav{display:flex;align-items:center;height:36px;position:relative}
+.pd-back,.pd-skip{width:36px;height:36px;display:grid;place-items:center;color:var(--pd-purple);flex:none}
+.pd-back svg,.pd-skip svg{width:20px;height:20px}
+.pd-skip{margin-left:auto}
+.pd-dash{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:4px}
+.pd-dash i{width:11px;height:3px;border-radius:2px;background:#3A3940;transition:.3s}
+.pd-dash i.on{background:var(--pd-purple)}
+.pd-h{font-size:24px;line-height:1.18;font-weight:700;letter-spacing:-.022em;margin:16px 0 0;color:var(--pd-ink)}
+.pd-sub{font-size:15px;line-height:1.4;color:var(--pd-sub);margin:6px 0 0;font-weight:400}
+
+.pd-btn{display:block;width:100%;height:50px;border-radius:25px;background:var(--pd-purple);color:#fff;
+  font:500 16px/1 'Inter',sans-serif;letter-spacing:-.005em;transition:filter .15s,background .15s}
+.pd-btn:hover{filter:brightness(1.08)}
+.pd-btn[disabled]{background:var(--pd-btn-off);color:rgba(255,255,255,.55);cursor:default;filter:none}
+.pd-helper{font-size:12.5px;line-height:1.4;color:var(--pd-sub);text-align:center;margin:0 0 12px}
+.pd-link{display:block;width:100%;margin-top:14px;font:500 14px/1 'Inter',sans-serif;color:var(--pd-sub)}
+.pd-link b{color:var(--pd-ink);font-weight:600}
+
+/* welcome — their floating cover collage */
+.pd-collage{position:relative;height:430px;margin:0 -18px}
+.pd-collage img{position:absolute;display:block;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.pd-wl{font-size:15px;line-height:1.4;font-weight:500;text-align:center;color:var(--pd-ink);margin:8px 12px 0}
+.pd-legal{font-size:11.5px;line-height:1.45;color:var(--pd-sub);text-align:center;margin-top:16px}
+.pd-legal u{color:var(--pd-ink2)}
+
+/* languages — their list rows */
+.pd-rows{display:flex;flex-direction:column;gap:8px;margin-top:20px;padding-bottom:12px}
+.pd-row{display:flex;align-items:center;justify-content:space-between;width:100%;height:46px;padding:0 14px;
+  border:1px solid var(--pd-line);border-radius:var(--r-ctl);background:var(--pd-row);font:500 15px/1 'Inter',sans-serif;color:var(--pd-ink);text-align:left;transition:.15s}
+.pd-row .rc{width:20px;height:20px;border-radius:50%;border:1.5px solid #3A3940;display:grid;place-items:center}
+.pd-row .rc svg{width:18px;height:18px;stroke:var(--pd-purple);stroke-width:2.2;fill:none;opacity:0}
+.pd-row.on{background:var(--pd-card);border-color:var(--pd-card);color:#C3B2FF}
+.pd-row.on .rc{border-color:transparent}
+.pd-row.on .rc svg{opacity:1}
+.pd-footrow{display:flex;gap:10px}
+.pd-search{flex:none;width:44%;height:50px;border-radius:25px;background:var(--pd-field);display:flex;align-items:center;gap:10px;padding:0 18px;
+  font:500 15px/1 'Inter',sans-serif;color:var(--pd-sub)}
+.pd-search svg{width:18px;height:18px;stroke:var(--pd-sub);fill:none;stroke-width:2}
+
+/* podcasts / audiobooks cards */
+.pd-type{display:block;width:100%;text-align:left;background:var(--pd-card);border-radius:var(--r-media);padding:16px 0 14px;margin-top:12px;overflow:hidden;transition:.15s;border:2px solid transparent}
+.pd-type:first-child{margin-top:20px}
+.pd-type .hd{display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.pd-type .hd b{font-size:21px;font-weight:700;letter-spacing:-.02em}
+.pd-chk{width:26px;height:26px;border-radius:50%;border:1.5px solid #55535B;display:grid;place-items:center;transition:.15s}
+.pd-chk svg{width:14px;height:14px;stroke:#fff;stroke-width:2.6;fill:none;opacity:0;stroke-linecap:round;stroke-linejoin:round}
+.pd-type.on .pd-chk,.pd-show.on .pd-add{background:var(--pd-purple);border-color:var(--pd-purple)}
+.pd-type.on .pd-chk svg,.pd-show.on .pd-add .y{opacity:1}
+.pd-type .cv{display:flex;gap:8px;margin-top:14px;padding-left:0}
+.pd-type .cv img{width:104px;height:104px;border-radius:6px;display:block;flex:none;object-fit:cover}
+
+/* topic chips */
+.pd-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pd-chip{height:34px;padding:0 13px;border-radius:17px;border:1px solid #2E2D33;font:500 14px/1 'Inter',sans-serif;color:var(--pd-sub);transition:.15s}
+.pd-chip.on{background:var(--pd-purple);border-color:var(--pd-purple);color:#fff}
+
+/* shows list — their tabs, rows and plus/check */
+.pd-tabs{display:flex;background:var(--pd-field);border-radius:20px;padding:3px;margin-top:16px}
+.pd-tabs button{flex:1;height:32px;border-radius:17px;font:500 13.5px/1 'Inter',sans-serif;color:var(--pd-sub);transition:.15s}
+.pd-tabs button.on{background:var(--pd-purple);color:#fff}
+.pd-shows{display:flex;flex-direction:column;margin-top:6px;padding-bottom:10px}
+.pd-lab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pd-muted);margin:14px 0 2px}
+.pd-show{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 0;border-bottom:1px solid #141317}
+.pd-show img{width:58px;height:58px;border-radius:6px;flex:none;display:block;object-fit:cover}
+.pd-show .tx{flex:1;min-width:0}
+.pd-show .tx b{display:block;font-size:15px;font-weight:600;line-height:1.25;color:var(--pd-ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pd-show .tx span{display:block;font-size:12.5px;color:var(--pd-sub);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pd-show .tx em{font-style:normal;color:#C3B2FF}
+.pd-add{width:26px;height:26px;border-radius:50%;background:#2C2B30;border:1.5px solid #2C2B30;display:grid;place-items:center;flex:none;position:relative;transition:.15s}
+.pd-add svg{position:absolute;width:13px;height:13px;stroke:#fff;stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.pd-add .y{opacity:0}
+.pd-show.on .pd-add .p{opacity:0}
+
+/* notifications primer */
+.pd-ill{display:grid;place-items:center;height:330px}
+.pd-ill svg{width:150px;height:150px}
+.pd-alert{position:absolute;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45)}
+.pd-alert.show{display:flex}
+.pd-alert .box{width:270px;border-radius:14px;background:rgba(48,47,52,.97);text-align:center;overflow:hidden}
+.pd-alert .box p{padding:18px 16px 14px;font-size:13px;line-height:1.35;color:#E6E4E8}
+.pd-alert .box p b{display:block;font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;line-height:1.25}
+.pd-alert .bt{display:flex;border-top:1px solid rgba(255,255,255,.14)}
+.pd-alert .bt button{flex:1;height:44px;font-size:16px;color:#3E9BFF}
+.pd-alert .bt button+button{border-left:1px solid rgba(255,255,255,.14);font-weight:600}
+
+/* loader — their tilted covers on black + tick list */
+.scr--load .scr-body{padding:0}
+.pd-float{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.pd-float img{position:absolute;width:96px;height:96px;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.6);opacity:0;transform:scale(.8);transition:opacity .6s,transform .6s}
+.pd-float img.in{opacity:1;transform:scale(1)}
+.pd-lsteps{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;padding:0 64px}
+.pd-ls{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;line-height:1.35;font-weight:500;color:var(--pd-muted);opacity:0;transition:.4s}
+.pd-ls.show{opacity:1}
+.pd-ls.on{color:var(--pd-ink)}
+.pd-ls .d{width:16px;height:16px;flex:none;margin-top:1px;position:relative}
+.pd-ls .d svg{position:absolute;inset:0;width:16px;height:16px}
+.pd-ls .d .ok{stroke:var(--pd-ink);stroke-width:2.6;fill:none;opacity:0;stroke-linecap:round;stroke-linejoin:round}
+.pd-ls .d .sp{animation:spin 1s linear infinite}
+.pd-ls.on .d .ok{opacity:1}
+.pd-ls.on .d .sp{display:none}
+.pd-ls small{display:block;font-size:12px;color:var(--pd-sub);font-weight:400;margin-top:2px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* paywall — their carousel composition */
+.scr--pay .scr-body{padding:0;display:flex;flex-direction:column}
+.pd-car{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:44px 18px 0 18px;scroll-snap-type:x mandatory;flex:none}
+.pd-car::-webkit-scrollbar{display:none}
+.pd-car img{width:148px;height:148px;border-radius:8px;flex:none;display:block;object-fit:cover;scroll-snap-align:center;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.pd-paytxt{text-align:center;padding:0 22px;margin-top:40px}
+.pd-kick{font-size:13px;font-weight:500;color:var(--pd-purple)}
+.pd-payh{font-size:24px;line-height:1.18;font-weight:700;letter-spacing:-.022em;margin:6px 0 0;color:var(--pd-ink)}
+.pd-price{font-size:13.5px;line-height:1.45;color:var(--pd-sub);margin-top:8px}
+.pd-perks{font-size:13px;line-height:1.45;color:var(--pd-ink2);margin-top:12px}
+.pd-proof{display:flex;justify-content:center;gap:0;margin:16px auto 0;max-width:300px;border-top:1px solid #1C1B20;border-bottom:1px solid #1C1B20}
+.pd-proof div{flex:1;padding:10px 4px;text-align:center}
+.pd-proof div+div{border-left:1px solid #1C1B20}
+.pd-proof b{display:block;font-size:16px;font-weight:700;color:var(--pd-ink);letter-spacing:-.01em}
+.pd-proof b i{font-style:normal;color:#F5B83D}
+.pd-proof span{display:block;font-size:11px;color:var(--pd-sub);margin-top:1px;line-height:1.3}
+.pd-legrow{display:flex;justify-content:center;gap:26px;margin-top:12px}
+.pd-legrow a{font-size:11.5px;color:var(--pd-sub);text-decoration:none}
+
+/* offer sheet — comparison + timeline, same Premium plan */
+.scr--offer{background:transparent}
+.pd-dim{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.pd-sheet{position:absolute;left:0;right:0;bottom:0;top:64px;background:#121116;border-radius:22px 22px 0 0;display:flex;flex-direction:column}
+.pd-sheet .scr-top{padding:12px 18px 0}
+.pd-handle{width:38px;height:5px;border-radius:3px;background:#3A3940;margin:0 auto}
+.pd-x{position:absolute;right:14px;top:14px;width:30px;height:30px;border-radius:50%;background:#2C2B30;display:grid;place-items:center;color:#D8D5DC}
+.pd-x svg{width:14px;height:14px}
+.pd-oh{font-size:22px;line-height:1.2;font-weight:700;letter-spacing:-.02em;margin:18px 28px 0 0}
+.pd-os{font-size:14px;line-height:1.45;color:var(--pd-sub);margin-top:6px}
+.pd-cmp{margin-top:16px;border-radius:var(--r-media);background:var(--pd-card);padding:4px 14px}
+.pd-cmp .r{display:grid;grid-template-columns:1fr 54px 64px;align-items:center;gap:6px;padding:10px 0;border-top:1px solid #38373D;font-size:13.5px;line-height:1.3;color:var(--pd-ink2)}
+.pd-cmp .r:first-child{border-top:none}
+.pd-cmp .r.hd{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--pd-sub);padding:9px 0 7px}
+.pd-cmp .r.hd span:last-child{color:#C3B2FF}
+.pd-cmp .r > span:nth-child(2),.pd-cmp .r > span:nth-child(3){text-align:center}
+.pd-cmp .r small{display:block;font-size:11.5px;color:var(--pd-sub);margin-top:2px}
+.pd-y{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--pd-purple)}
+.pd-y svg{width:11px;height:11px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.pd-y.g{background:#4A4950}
+.pd-n{color:#55535B;font-weight:600}
+.pd-tl{margin-top:16px;padding-left:4px}
+.pd-tl .s{display:flex;gap:12px;position:relative;padding-bottom:12px}
+.pd-tl .s:last-child{padding-bottom:0}
+.pd-tl .s::before{content:'';position:absolute;left:8px;top:20px;bottom:0;width:2px;background:#2C2B30}
+.pd-tl .s:last-child::before{display:none}
+.pd-tl .dot{width:18px;height:18px;flex:none;border-radius:50%;border:2px solid var(--pd-purple);background:#121116;margin-top:1px}
+.pd-tl .s:first-child .dot{background:var(--pd-purple)}
+.pd-tl .s div{font-size:13px;line-height:1.4;color:var(--pd-sub)}
+.pd-tl .s div b{display:block;font-size:14px;color:var(--pd-ink);font-weight:600}
+
+/* account after purchase — their sign-in buttons */
+.pd-done{display:grid;place-items:center;margin-top:60px}
+.pd-done svg{width:96px;height:96px}
+.pd-auth{display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.pd-ab{display:flex;align-items:center;justify-content:center;position:relative;height:44px;border-radius:22px;border:1px solid #2E2D33;
+  font:500 14.5px/1 'Inter',sans-serif;color:var(--pd-ink)}
+.pd-ab svg{position:absolute;left:16px;width:18px;height:18px}
+.pd-ab.apple{background:#fff;color:#111;border-color:#fff}
+.pd-centre{text-align:center}
+
+/* light mode — an approximation: Podimo's onboarding ships dark only */
+.phone-in.light{--pd-bg:#F5F4F8;--pd-card:#FFFFFF;--pd-field:#E9E7EE;--pd-row:#FFFFFF;--pd-line:#E4E2E9;
+  --pd-ink:#111014;--pd-ink2:#2A2830;--pd-sub:#625F68;--pd-muted:#8D8A93;--pd-btn-off:#C9BCF5}
+.phone-in.light .screenwrap{background:var(--pd-bg)}
+.phone-in.light .pd-row.on{background:#ECE6FF;border-color:#D9CCFF;color:var(--pd-purple-dk)}
+.phone-in.light .pd-row .rc{border-color:#CFCCD6}
+.phone-in.light .pd-type{box-shadow:0 2px 12px rgba(20,16,30,.06)}
+.phone-in.light .pd-chk{border-color:#CFCCD6}
+.phone-in.light .pd-chip{border-color:#D8D5DE}
+.phone-in.light .pd-show{border-bottom-color:#E7E5EC}
+.phone-in.light .pd-add{background:#E3E0EA;border-color:#E3E0EA}
+.phone-in.light .pd-add .p{stroke:#3A3940}
+.phone-in.light .pd-show .tx em{color:var(--pd-purple-dk)}
+.phone-in.light .pd-dash i{background:#D5D2DC}
+.phone-in.light .pd-dash i.on{background:var(--pd-purple)}
+.phone-in.light .pd-collage img,.phone-in.light .pd-float img,.phone-in.light .pd-car img{box-shadow:0 10px 26px rgba(20,16,30,.18)}
+.phone-in.light .pd-proof,.phone-in.light .pd-proof div+div{border-color:#E1DFE6}
+.phone-in.light .pd-sheet{background:#FFFFFF}
+.phone-in.light .pd-cmp{background:#F3F1F7}
+.phone-in.light .pd-cmp .r{border-top-color:#E3E0EA}
+.phone-in.light .pd-cmp .r.hd span:last-child{color:var(--pd-purple-dk)}
+.phone-in.light .pd-tl .dot{background:#fff}
+.phone-in.light .pd-tl .s:first-child .dot{background:var(--pd-purple)}
+.phone-in.light .pd-tl .s::before{background:#E3E0EA}
+.phone-in.light .pd-x{background:#ECEAF0;color:#3A3940}
+.phone-in.light .pd-handle{background:#D5D2DC}
+.phone-in.light .pd-dim{background:rgba(20,16,30,.35)}
+.phone-in.light .pd-ab{border-color:#D8D5DE}
+.phone-in.light .pd-ab.apple{background:#111;color:#fff;border-color:#111}
+.phone-in.light .pd-ab.apple svg{fill:#fff}
+.phone-in.light .pd-ls .d .ok{stroke:var(--pd-ink)}
+.phone-in.light .pd-alert .box{background:rgba(242,242,247,.97)}
+.phone-in.light .pd-alert .box p{color:#333}
+.phone-in.light .pd-alert .box p b{color:#000}
+.phone-in.light .pd-alert .bt{border-top-color:rgba(0,0,0,.12)}
+.phone-in.light .pd-alert .bt button+button{border-left-color:rgba(0,0,0,.12)}
+.phone-in.light .pd-alert .bt button{color:#007AFF}
+.phone-in.light .illbox{stroke:#C9BCF5}
+
+/* prototype toolbar, walkthrough, QR — shell styling */
+.tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:520px}
+.seg{display:inline-flex;align-items:center;background:#141318;border:1px solid #2C2B30;border-radius:20px;padding:3px;gap:2px}
+.seg button{padding:6px 11px;border-radius:16px;font:600 12px/1 'Inter',sans-serif;color:var(--ink2);transition:.14s}
+.seg button.on{background:var(--ink);color:#0B0A0F}
+.demo-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:20px;background:var(--accent);color:#fff;
+  font:700 12px/1 'Inter',sans-serif}
+.demo-cap{width:390px;max-width:calc(100vw - 24px);background:#141318;border:1px solid var(--hair2);border-radius:16px;padding:14px 14px 12px;
+  display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.demo-cap .bar{position:absolute;left:0;top:0;right:0;height:3px;background:#2C2B30}
+.demo-cap .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.demo-cap p{flex:1;font-size:13.5px;line-height:1.45;color:var(--ink);margin:0;font-weight:500}
+.demo-cap button{font:700 12px/1 'Inter',sans-serif;color:var(--ink2);padding:7px 10px;border-radius:12px;border:1px solid #2C2B30;flex:none}
+.finger{position:absolute;z-index:90;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(255,255,255,.22);
+  border:2px solid rgba(255,255,255,.95);box-shadow:0 4px 14px rgba(0,0,0,.35);pointer-events:none;opacity:0;left:50%;top:60%;
+  transition:left .32s cubic-bezier(.4,0,.2,1),top .32s cubic-bezier(.4,0,.2,1),opacity .2s,transform .15s}
+.finger.show{opacity:1}
+.finger.press{transform:scale(.78);background:rgba(255,255,255,.4)}
+.qr{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--hair);border-radius:16px;padding:10px 16px 10px 10px;text-align:left;order:2}
+.qr img{width:135px;height:135px;display:block;image-rendering:pixelated;border-radius:6px}
+.qr span{font-size:12.5px;line-height:1.45;color:#4A4750}
+.qr b{display:block;color:#111014;font-size:13.5px}
+@media(max-width:1080px){.qr{display:none}}
+
+#view-proto .tools{order:0} #view-proto .demo-cap{order:1} #view-proto .phone{order:2} #view-proto .chips{order:3}
+#view-proto .chiphint{order:4} #view-proto .qr{order:5}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:470px;margin:0 auto}
+.chip{padding:7px 13px;border-radius:20px;border:1px solid #2C2B30;background:#141318;
+  font:600 12px/1 'Inter',sans-serif;color:var(--ink2);transition:.14s}
+.chip:hover{color:var(--ink);border-color:#45434C}
+.chip.offer{border-style:dashed;border-color:var(--accent);color:var(--accent-lift)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;border-style:solid}
+.chiphint{text-align:center;font-size:11px;color:var(--ink3);margin:0;max-width:430px}
+
+/* on a phone: the prototype is the screen */
+@media(max-width:500px){
+  #view-proto .phonecol{padding:0 0 28px;gap:14px}
+  #view-proto .phone{width:100vw;height:calc(100svh - 58px);min-height:640px;border:0;border-radius:0;box-shadow:none;order:1}
+  #view-proto .phone-in{border-radius:0}
+  #view-proto .island,#view-proto .sbar,#view-proto .homebar{display:none}
+  #view-proto .scr-top{padding-top:14px}
+  #view-proto .scr-foot{padding-bottom:18px}
+  #view-proto .pd-sheet{top:16px}
+  #view-proto .pd-sheet .scr-top{padding-top:12px}
+  #view-proto .pd-collage{height:360px}
+  #view-proto .tools{order:3;padding:0 12px}
+  #view-proto .demo-cap{position:fixed;left:12px;right:12px;bottom:12px;width:auto;max-width:none;z-index:95}
+  #view-proto .chips{order:4;padding:0 12px}
+  #view-proto .chiphint{order:5}
+}
+
+/* ============ the short panel ============ */
+.pn{padding:30px 30px 60px}
+.pn-n{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+.pn-n.ctx{color:var(--panel-muted)}
+.pn-t{font-size:23px;line-height:1.18;font-weight:700;letter-spacing:-.028em;margin:8px 0 0;color:var(--panel-ink)}
+.pn-hyp{font-size:15px;line-height:1.62;color:#2E2B35;margin:16px 0 0}
+.pn-hyp b{font-weight:700;color:var(--panel-ink)}
+.pn-out{margin-top:22px;border-top:1px solid var(--panel-line);padding-top:18px}
+.pn-out .lab{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--panel-muted)}
+.pn-out .v{font-size:31px;font-weight:700;letter-spacing:-.035em;color:var(--accent-ink);margin-top:7px;line-height:1}
+.pn-kept{margin-top:22px;font-size:12.5px;line-height:1.55;color:var(--panel-muted)}
+.pn-kept b{color:#2E2B35;font-weight:700}
+.pn-foot{font-size:11.5px;line-height:1.55;color:var(--panel-muted);border-top:1px solid var(--panel-line);
+  padding-top:14px;margin-top:26px}
+.pn-sep{height:1px;background:var(--panel-line);margin:26px 0}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-in">
+    <div class="nav-brand">
+      <img src="img/icon.png" alt="Podimo">
+      <b>Growth Audit</b><span>· Podimo</span>
+    </div>
+    <div class="nav-links">
+      <button class="on" data-view="over">Overview</button>
+      <button data-view="proto">Prototype</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= OVERVIEW ======================= -->
+<div class="view on" id="view-over">
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Growth Audit · October 2026</div>
+    <h1>Podimo</h1>
+    <p class="lede">Five ideas to unlock more revenue from the traffic you already have.</p>
+    <div class="meta">Prepared by <b>Adapty</b> · based on your live iOS flow and your App Store listing</div>
+    <div class="herobtns"><button class="ghostbtn" data-demo><span class="pl"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></span>Watch the 30-second walkthrough</button></div>
+    <div class="stats">
+      <div class="stat"><b>30,000+</b><span>apps run subscriptions<br>on Adapty</span></div>
+      <div class="stat"><b>5</b><span>ideas, each rebuilt<br>as a working screen</span></div>
+      <div class="stat"><b>0</b><span>design changes<br>to your art direction</span></div>
+    </div>
+
+    <div class="fb">
+      <div class="fb-k">Built in Adapty Flow Builder</div>
+      <div class="fb-i">
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <p><b>Millions of dollars</b> in subscription revenue pass through Flow Builder every month.</p>
+      </div>
+      <div class="fb-i">
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <p><b>Nearly 500 apps</b> actively build their paywalls and onboarding in it — plenty of them past $100K MRR.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="wrap">
+    <div class="sec-k">What this is</div>
+    <h2>We opened Podimo the way a new listener does, then rebuilt the parts we think are leaving money on the table.</h2>
+    <p class="body">Adapty powers subscriptions for <b>30,000+ apps</b>, so we get to see what actually moves conversion and ARPU across the market rather than inside one app. We pointed that at Podimo: went through the first screens of the iOS app, read your App Store listing and your pricing pages, and looked for gaps between what you already have and what you show people at the moment they decide.</p>
+    <p class="body">What follows is five ideas — not fifteen. Each one is a hypothesis you can A/B test, and each one is built into a clickable prototype so you can see it rather than imagine it. <b>The prototype uses your design, not ours.</b></p>
+
+    <div class="notes">
+      <div class="note">
+        <h4>We did not redesign your app</h4>
+        <p>Every screen in the prototype is yours — your near-black screens, your purple pill buttons, your cover cards, your topic chips, your tilted-cover loader and your carousel paywall. Only the order changed, plus a few things you already own but do not show at the right moment.</p>
+      </div>
+      <div class="note">
+        <h4>You may have tested some of this</h4>
+        <p>We are working from the outside, so we cannot see your experiment history. If one of these is something you have already run, tell us — we will go deeper on the rest rather than repeat it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="sec">
+  <div class="wrap">
+    <div class="sec-k">The five ideas</div>
+    <h2>Ranked by what we would test first.</h2>
+    <p class="body">Each one links straight to the screen in the prototype.</p>
+
+    <div class="ideas">
+      <button class="idea" data-jump="paywall">
+        <span class="no">01</span>
+        <span>
+          <h3>Put the shows they picked on the paywall</h3>
+          <p>Two screens before the paywall, a new listener picks five topics and follows the shows they want. The paywall then says “All our exclusive content” to everyone, over covers they did not choose. Their own shows belong in that carousel and in the headline.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +15–20%</b><span>to purchase</span></span>
+      </button>
+
+      <button class="idea" data-jump="welcome">
+        <span class="no">02</span>
+        <span>
+          <h3>Ask for the account after the paywall</h3>
+          <p>Today the first screen is Apple, Google, Facebook or email, and the email path is three more screens: email, name, password. That is four screens of form before anyone has heard a single show. Ask once they have something to save.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +8% · ARPU +17%</b><span>to purchase</span></span>
+      </button>
+
+      <button class="idea" data-jump="offer">
+        <span class="no">03</span>
+        <span>
+          <h3>Give a second chance when they skip</h3>
+          <p>The arrow at the top of the paywall drops people straight into the app. Nothing tells them what Free leaves out or when the trial would actually charge. One sheet can do both, on the same Premium plan and the same trial.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>ARPU +10–15%</b><span>second chance</span></span>
+      </button>
+
+      <button class="idea" data-jump="loader">
+        <span class="no">04</span>
+        <span>
+          <h3>Run your loader before the price, not after</h3>
+          <p>“Adjusting Language, Gathering your interests, Wrapping things up” plays after purchase, when it can no longer help anyone decide. Move it in front of the paywall and let each line name what it is using: their languages, their topics, the shows going into their library.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +10–15%</b><span>to purchase</span></span>
+      </button>
+
+      <button class="idea" data-jump="paywall">
+        <span class="no">05</span>
+        <span>
+          <h3>Show your 4.7 and your million listeners</h3>
+          <p>Your homepage leads with “Rated 4.7 on the App Store” and “More than 1 million listeners”. Neither appears anywhere in the app flow. Put both right under the price, where the decision is made.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +10–15%</b><span>to purchase</span></span>
+      </button>
+    </div>
+
+    <div class="band">
+      <div class="txt">
+        <div class="lab">Potential outcome</div>
+        <p>All five move the same funnel at three points: what stands between install and the first show, what the paywall says about the listener in front of it, and what happens when they say not yet.</p>
+      </div>
+      <div class="nums">
+        <div><b>+25%</b><span>CR to purchase</span></div>
+        <div><b>up to +30%</b><span>Revenue</span></div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <div class="qr"><img src="img/qr.svg" alt="QR code for the prototype"><span><b>Or open it on your phone</b>Scan to try the flow in your hand.</span></div>
+      <button class="bigbtn" data-view="proto">Open the prototype
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="wrap">
+    Impact ranges are Adapty's expected effect from teardowns and A/B tests across subscription apps — not measured lift for Podimo. Every price, rating, cover, plan line and claim here and in the prototype comes from Podimo's own App Store listing, podimo.com and in-app screens.
+  </div>
+</div>
+</div><!-- /view-over -->
+
+<!-- ======================= PROTOTYPE ======================= -->
+<div class="view" id="view-proto">
+<div class="stage">
+  <div class="phonecol">
+    <div class="tools" id="tools">
+      <div class="seg" id="segLang"><button data-lang="en" class="on">EN</button><button data-lang="da">DA</button><button data-lang="es">ES</button></div>
+      <div class="seg" id="segTheme"><button data-theme="light">Light</button><button data-theme="dark" class="on">Dark</button></div>
+      <button class="demo-btn" id="demoBtn"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>30-sec walkthrough</button>
+    </div>
+    <div class="phone">
+      <div class="phone-in" id="phoneIn">
+        <div class="island"></div>
+        <div class="sbar" id="sbar">
+          <span>9:41</span>
+          <span class="glyphs">
+            <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.5" y="5.5" width="3" height="5.5" rx="1"/><rect x="9" y="3" width="3" height="8" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+            <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 10.5 5.6 7.9a3.4 3.4 0 0 1 4.8 0L8 10.5Zm0-5.6a6.4 6.4 0 0 0-4.5 1.9L1.7 4.9a9 9 0 0 1 12.6 0l-1.8 1.9A6.4 6.4 0 0 0 8 4.9Z"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".6" y=".6" width="20" height="10.8" rx="3" stroke="currentColor" stroke-opacity=".5"/><rect x="2.2" y="2.2" width="16.5" height="7.6" rx="1.8" fill="currentColor"/><path d="M22.3 4.1v3.8a2 2 0 0 0 0-3.8Z" fill="currentColor" fill-opacity=".5"/></svg>
+          </span>
+        </div>
+        <div class="homebar" id="homebar"></div>
+        <div class="finger" id="finger"></div>
+        <div class="screenwrap">
+
+<!-- WELCOME -->
+<section class="scr" data-id="welcome">
+  <div class="scr-top" style="padding-top:44px"></div>
+  <div class="scr-body">
+    <div class="pd-collage">
+      <img src="img/conejilla.webp" alt="" style="left:40px;top:40px;width:84px;height:84px;transform:rotate(-4deg)">
+      <img src="img/tecito.webp" alt="" style="left:180px;top:20px;width:130px;height:130px;transform:rotate(3deg)">
+      <img src="img/ciencia.webp" alt="" style="left:-10px;top:160px;width:104px;height:104px;transform:rotate(-6deg)">
+      <img src="img/tao.webp" alt="" style="left:82px;top:200px;width:136px;height:136px;transform:rotate(2deg)">
+      <img src="img/relatos.webp" alt="" style="left:240px;top:190px;width:104px;height:104px;transform:rotate(-3deg)">
+      <img src="img/historias.webp" alt="" style="left:262px;top:322px;width:76px;height:76px;transform:rotate(5deg)">
+    </div>
+    <p class="pd-wl" data-t="wel.h"></p>
+  </div>
+  <div class="scr-foot">
+    <button class="pd-btn" id="welBtn" data-go="lang" data-t="wel.cta"></button>
+    <button class="pd-link" data-th="wel.login"></button>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="scr" data-id="lang">
+  <div class="scr-top">
+    <div class="pd-nav"><span class="pd-dash" data-step="1"></span></div>
+    <h2 class="pd-h" data-t="lang.h"></h2>
+    <p class="pd-sub" data-t="lang.sub"></p>
+  </div>
+  <div class="scr-body"><div class="pd-rows" id="langList"></div></div>
+  <div class="scr-foot">
+    <div class="pd-footrow">
+      <span class="pd-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span data-t="lang.search"></span></span>
+      <button class="pd-btn" id="langBtn" data-go="type" data-t="cont"></button>
+    </div>
+  </div>
+</section>
+
+<!-- PODCASTS / AUDIOBOOKS -->
+<section class="scr" data-id="type">
+  <div class="scr-top">
+    <div class="pd-nav"><button class="pd-back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="pd-dash" data-step="2"></span></div>
+    <h2 class="pd-h" data-t="type.h"></h2>
+    <p class="pd-sub" data-t="type.sub"></p>
+  </div>
+  <div class="scr-body">
+    <button class="pd-type" data-v="pod">
+      <span class="hd"><b data-t="type.pod"></b><span class="pd-chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></span>
+      <span class="cv"><img src="img/breve.webp" alt=""><img src="img/whitexican.webp" alt=""><img src="img/historias.webp" alt=""><img src="img/humanidad.webp" alt=""></span>
+    </button>
+    <button class="pd-type" data-v="book">
+      <span class="hd"><b data-t="type.book"></b><span class="pd-chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></span>
+      <span class="cv"><img src="img/escobar.webp" alt=""><img src="img/nieve.webp" alt=""><img src="img/diluvio.webp" alt=""><img src="img/ritos.webp" alt=""></span>
+    </button>
+    <div style="height:12px"></div>
+  </div>
+  <div class="scr-foot"><button class="pd-btn" id="typeBtn" data-go="topics" data-t="cont"></button></div>
+</section>
+
+<!-- TOPICS -->
+<section class="scr" data-id="topics">
+  <div class="scr-top">
+    <div class="pd-nav"><button class="pd-back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="pd-dash" data-step="3"></span></div>
+    <h2 class="pd-h" data-t="top.h"></h2>
+    <p class="pd-sub" data-t="top.sub"></p>
+  </div>
+  <div class="scr-body"><div class="pd-chips" id="topicList"></div></div>
+  <div class="scr-foot"><button class="pd-btn" id="topBtn" data-go="shows" data-t="cont"></button></div>
+</section>
+
+<!-- SHOWS -->
+<section class="scr" data-id="shows">
+  <div class="scr-top">
+    <div class="pd-nav"><button class="pd-back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="pd-dash" data-step="4"></span></div>
+    <h2 class="pd-h" data-t="sh.h"></h2>
+    <p class="pd-sub" data-t="sh.sub"></p>
+    <div class="pd-tabs" id="showTabs"><button data-tab="pod" data-t="type.pod"></button><button data-tab="book" data-t="type.book"></button></div>
+  </div>
+  <div class="scr-body"><div class="pd-shows" id="showList"></div></div>
+  <div class="scr-foot"><button class="pd-btn" id="showBtn" data-go="notif"></button></div>
+</section>
+
+<!-- NOTIFICATIONS -->
+<section class="scr" data-id="notif">
+  <div class="scr-top">
+    <div class="pd-nav"><button class="pd-back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="pd-dash" data-step="5"></span><button class="pd-skip" data-go="loader" aria-label="Skip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    <h2 class="pd-h" data-t="nt.h"></h2>
+    <p class="pd-sub" data-t="nt.sub"></p>
+  </div>
+  <div class="scr-body">
+    <div class="pd-ill"><svg viewBox="0 0 150 150" fill="none"><rect class="illbox" x="22" y="34" width="96" height="96" rx="24" stroke="#3B2C78" stroke-width="5"/><path d="M112 62c-5-4-22-15-22-29 0-7 5-12 11-12 5 0 9 3 11 7 2-4 6-7 11-7 6 0 11 5 11 12 0 14-17 25-22 29Z" fill="#794AF9"/></svg></div>
+  </div>
+  <div class="scr-foot">
+    <p class="pd-helper" data-t="nt.help"></p>
+    <button class="pd-btn" id="ntBtn" data-t="nt.cta"></button>
+  </div>
+  <div class="pd-alert" id="ntAlert"><div class="box"><p><b data-t="nt.aT"></b><span data-t="nt.aD"></span></p><div class="bt"><button data-go="loader" data-t="nt.no"></button><button data-go="loader" id="ntAllow" data-t="nt.yes"></button></div></div></div>
+</section>
+
+<!-- LOADER -->
+<section class="scr scr--load" data-id="loader">
+  <div class="scr-body">
+    <div class="pd-float" id="floatCovers"></div>
+    <div class="pd-lsteps" id="loadSteps">
+      <div class="pd-ls"><span class="d"><svg class="sp" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity=".3" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><svg class="ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="t"></span></div>
+      <div class="pd-ls"><span class="d"><svg class="sp" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity=".3" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><svg class="ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="t"></span></div>
+      <div class="pd-ls"><span class="d"><svg class="sp" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity=".3" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><svg class="ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="t"></span></div>
+      <div class="pd-ls"><span class="d"><svg class="sp" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity=".3" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><svg class="ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="t"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYWALL -->
+<section class="scr scr--pay" data-id="paywall">
+  <div class="scr-top">
+    <div class="pd-nav"><span class="pd-dash" data-step="6"></span><button class="pd-skip" id="payClose" aria-label="Skip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+  </div>
+  <div class="scr-body">
+    <div class="pd-car" id="payCar"></div>
+    <div class="pd-paytxt">
+      <div class="pd-kick" id="payKick"></div>
+      <h2 class="pd-payh" id="payH"></h2>
+      <p class="pd-price" id="payPrice"></p>
+      <p class="pd-perks" data-t="pw.perks"></p>
+      <div class="pd-proof">
+        <div><b><i>★</i> 4.7</b><span data-t="pw.rated"></span></div>
+        <div><b data-t="pw.mil"></b><span data-t="pw.listeners"></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="scr-foot">
+    <button class="pd-btn" id="payCta" data-t="pw.cta"></button>
+    <div class="pd-legrow"><a data-t="lg.terms"></a><a data-t="lg.priv"></a><a data-t="lg.rest"></a></div>
+  </div>
+</section>
+
+<!-- OFFER ON SKIP -->
+<section class="scr scr--offer sheet" data-id="offer">
+  <div class="pd-dim"></div>
+  <div class="pd-sheet">
+    <div class="scr-top">
+      <div class="pd-handle"></div>
+      <button class="pd-x" id="offClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <h2 class="pd-oh" id="offH"></h2>
+      <p class="pd-os" data-t="of.sub"></p>
+    </div>
+    <div class="scr-body">
+      <div class="pd-cmp" id="offCmp"></div>
+      <div class="pd-tl">
+        <div class="s"><span class="dot"></span><div><b data-t="of.t1"></b><span data-t="of.t1d"></span></div></div>
+        <div class="s"><span class="dot"></span><div><b id="offDay"></b><span id="offDayD"></span></div></div>
+      </div>
+      <div style="height:6px"></div>
+    </div>
+    <div class="scr-foot">
+      <button class="pd-btn" id="offerCta"></button>
+      <button class="pd-link pd-centre" id="offFree" data-t="of.free"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ACCOUNT, AFTER PURCHASE -->
+<section class="scr" data-id="account">
+  <div class="scr-top">
+    <div class="pd-done"><svg viewBox="0 0 120 120"><path d="M60 104C48 94 14 72 14 44c0-14 10-24 23-24 10 0 18 6 23 14 5-8 13-14 23-14 13 0 23 10 23 24 0 28-34 50-46 60Z" fill="#794AF9"/></svg></div>
+    <h2 class="pd-h pd-centre" style="margin-top:22px" data-t="ac.h"></h2>
+    <p class="pd-sub pd-centre" id="acSub"></p>
+  </div>
+  <div class="scr-body">
+    <div class="pd-auth">
+      <button class="pd-ab apple" data-go="welcome"><svg viewBox="0 0 24 24" fill="#111"><path d="M16.4 12.6c0-2.5 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.1 2.5-1.8 3.1-.5 7.6 1.3 10.1.8 1.2 1.8 2.6 3.1 2.5 1.3-.1 1.7-.8 3.3-.8 1.5 0 1.9.8 3.3.8 1.4 0 2.2-1.2 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.8-1.1-2.8-4Zm-2.4-7.4c.7-.8 1.2-2 1-3.2-1 .1-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3.1 1.1.1 2.2-.6 2.9-1.4Z"/></svg><span data-t="ac.apple"></span></button>
+      <button class="pd-ab" data-go="welcome"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.5c2.1-1.9 3.3-4.7 3.3-8Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.2-2.7l-3.5-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.2v2.8A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.2a11 11 0 0 0 0 9.8l3.6-2.8Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.1-3.1A11 11 0 0 0 2.2 7.1l3.6 2.8C6.7 7.3 9.1 5.4 12 5.4Z"/></svg><span data-t="ac.google"></span></button>
+      <button class="pd-ab" data-go="welcome"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path fill="#fff" d="M13.4 19.5v-6h2l.3-2.4h-2.3V9.6c0-.7.2-1.2 1.2-1.2h1.2V6.3c-.2 0-1-.1-1.8-.1-1.8 0-3 1.1-3 3.1v1.8h-2v2.4h2v6h2.4Z"/></svg><span data-t="ac.fb"></span></button>
+      <button class="pd-ab" data-go="welcome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg><span data-t="ac.mail"></span></button>
+    </div>
+  </div>
+  <div class="scr-foot"><p class="pd-legal" data-th="ac.legal"></p></div>
+</section>
+
+        </div>
+      </div>
+    </div>
+    <div class="demo-cap hidden" id="demoCap"><div class="bar"><i id="demoProg"></i></div><p id="demoTxt"></p><button id="demoStop">Stop</button></div>
+    <div class="chips" id="chips"></div>
+    <p class="chiphint">Jump to any screen — answers already filled in.</p>
+    <div class="qr"><img src="img/qr.svg" alt="QR code for this prototype"><span><b>Open it on your phone</b>Scan to try the flow in your hand.</span></div>
+  </div>
+  <div class="panelcol"><div class="pn" id="panel"></div></div>
+</div>
+</div><!-- /view-proto -->
+
+<script>
+/* ================= copy, per language (phone screens only) ================= */
+var LANGS = ['en','da','es'];
+var T = {
+ 'wel.h':   ["Welcome to Podimo! Enjoy your next podcast and audiobook here","Velkommen til Podimo! Nyd din næste podcast og lydbog her","¡Bienvenido a Podimo! Disfruta aquí tu próximo podcast y audiolibro"],
+ 'wel.cta': ["Get started","Kom i gang","Empezar"],
+ 'wel.login':["Already a member? <b>Log in</b>","Allerede medlem? <b>Log ind</b>","¿Ya eres miembro? <b>Inicia sesión</b>"],
+ 'cont':    ["Continue","Fortsæt","Continuar"],
+ 'lang.h':  ["Which languages do you listen to?","Hvilke sprog lytter du på?","¿En qué idiomas escuchas?"],
+ 'lang.sub':["Make sure that you see the best podcasts and audiobooks, in languages you know.","Så du ser de bedste podcasts og lydbøger på sprog, du forstår.","Para que veas los mejores podcasts y audiolibros en idiomas que conoces."],
+ 'lang.search':["Search","Søg","Buscar"],
+ 'type.h':  ["What are you into?","Hvad er du til?","¿Qué te gusta?"],
+ 'type.sub':["Podcasts, audiobooks, or both?","Podcasts, lydbøger eller begge dele?","¿Podcasts, audiolibros o ambos?"],
+ 'type.pod':["Podcasts","Podcasts","Podcasts"],
+ 'type.book':["Audiobooks","Lydbøger","Audiolibros"],
+ 'top.h':   ["What are you into?","Hvad er du til?","¿Qué te gusta?"],
+ 'top.sub': ["Help us customize your experience by selecting 5 topics","Hjælp os med at tilpasse oplevelsen ved at vælge 5 emner","Ayúdanos a personalizar tu experiencia eligiendo 5 temas"],
+ 'sh.h':    ["The most popular podcasts and audiobooks","De mest populære podcasts og lydbøger","Los podcasts y audiolibros más populares"],
+ 'sh.sub':  ["Follow to stay updated on new episodes","Følg for at få besked om nye afsnit","Síguelos para enterarte de los nuevos episodios"],
+ 'sh.for':  ["For your topics","Til dine emner","Para tus temas"],
+ 'sh.more': ["More popular","Flere populære","Más populares"],
+ 'sh.excl': ["Exclusive","Eksklusiv","Exclusivo"],
+ 'sh.cta0': ["Continue","Fortsæt","Continuar"],
+ 'sh.cta':  ["{n} added - Continue","{n} tilføjet - Fortsæt","{n} añadidos - Continuar"],
+ 'nt.h':    ["Never miss an episode from your favourite podcast","Gå aldrig glip af et afsnit fra din yndlingspodcast","No te pierdas ningún episodio de tu podcast favorito"],
+ 'nt.sub':  ["Podcasts you follow will notify you when new episodes are out. You’ll also receive occasional emails with exciting news.","Podcasts, du følger, giver besked, når der kommer nye afsnit. Du får også af og til e-mails med spændende nyheder.","Los podcasts que sigues te avisarán cuando salgan nuevos episodios. También recibirás algún correo con novedades."],
+ 'nt.help': ["You can change this in settings at any time.","Du kan altid ændre det under indstillinger.","Puedes cambiarlo en ajustes cuando quieras."],
+ 'nt.cta':  ["Enable","Slå til","Activar"],
+ 'nt.aT':   ["“Podimo” Would Like to Send You Notifications","“Podimo” vil gerne sende dig notifikationer","“Podimo” quiere enviarte notificaciones"],
+ 'nt.aD':   ["Notifications may include alerts, sounds, and icon badges.","Notifikationer kan omfatte advarsler, lyde og symbolmærker.","Las notificaciones pueden incluir alertas, sonidos y globos."],
+ 'nt.no':   ["Don’t Allow","Tillad ikke","No permitir"],
+ 'nt.yes':  ["Allow","Tillad","Permitir"],
+ 'ld.lang': ["Adjusting language","Tilpasser sprog","Ajustando idioma"],
+ 'ld.int':  ["Gathering your interests","Samler dine interesser","Reuniendo tus intereses"],
+ 'ld.lib':  ["Adding {n} shows to your library","Tilføjer {n} serier til dit bibliotek","Añadiendo {n} shows a tu biblioteca"],
+ 'ld.lib1': ["Adding {x} to your library","Tilføjer {x} til dit bibliotek","Añadiendo {x} a tu biblioteca"],
+ 'ld.lib0': ["Picking shows for your topics","Finder serier til dine emner","Eligiendo shows para tus temas"],
+ 'ld.wrap': ["Wrapping things up","Gør det klar","Terminando"],
+ 'pw.kick': ["Picked by you","Valgt af dig","Elegido por ti"],
+ 'pw.kick0':["Get started","Kom i gang","Empezar"],
+ 'pw.h1':   ["{x} is waiting for you","{x} venter på dig","{x} te está esperando"],
+ 'pw.hN':   ["{x} and {n} more are waiting for you","{x} og {n} til venter på dig","{x} y {n} más te esperan"],
+ 'pw.h0':   ["All our exclusive content","Alt vores eksklusive indhold","Todo nuestro contenido exclusivo"],
+ 'pw.price':["{d} days free — then {p}/month<br>Cancel anytime","{d} dage gratis — derefter {p}/måned<br>Opsig når som helst","{d} días gratis — después {p}/mes<br>Cancela cuando quieras"],
+ 'pw.perks':["Unlimited podcasts · 20 hours of audiobooks","Ubegrænset podcasts · 20 timers lydbøger","Podcasts ilimitados · 20 horas de audiolibros"],
+ 'pw.rated':["on the App Store","i App Store","en la App Store"],
+ 'pw.mil':  ["1 million+","1 mio.+","1 millón+"],
+ 'pw.listeners':["listeners","lyttere","de oyentes"],
+ 'pw.cta':  ["Start free trial","Start gratis prøveperiode","Empezar prueba gratis"],
+ 'lg.terms':["Terms of Use","Vilkår","Términos de uso"],
+ 'lg.priv': ["Privacy Policy","Privatlivspolitik","Privacidad"],
+ 'lg.rest': ["Restore","Gendan","Restaurar"],
+ 'of.h1':   ["{x} is a Podimo exclusive","{x} findes kun på Podimo","{x} es exclusivo de Podimo"],
+ 'of.hN':   ["{n} of your shows are Podimo exclusives","{n} af dine serier findes kun på Podimo","{n} de tus shows son exclusivos de Podimo"],
+ 'of.h0':   ["Here’s what Premium adds","Det får du med Premium","Esto es lo que añade Premium"],
+ 'of.sub':  ["Here is what you get on Free and on Premium, and exactly when you would pay.","Her er forskellen på Free og Premium, og præcis hvornår du betaler.","Esto es lo que tienes en Free y en Premium, y cuándo pagarías exactamente."],
+ 'of.col0': ["","",""],
+ 'of.colF': ["Free","Free","Free"],
+ 'of.colP': ["Premium","Premium","Premium"],
+ 'of.r1':   ["Free podcasts from open RSS feeds","Gratis podcasts fra åbne RSS-feeds","Podcasts gratis de RSS abiertos"],
+ 'of.r2':   ["Podimo exclusives, with no ads","Podimo-eksklusive serier uden reklamer","Exclusivos de Podimo, sin anuncios"],
+ 'of.r3':   ["20 hours of audiobooks a month","20 timers lydbøger om måneden","20 horas de audiolibros al mes"],
+ 'of.r4':   ["Podcast episodes in full video","Podcastafsnit i fuld video","Episodios en vídeo completo"],
+ 'of.t1':   ["Today","I dag","Hoy"],
+ 'of.t1d':  ["Everything in Premium, free","Alt i Premium, gratis","Todo Premium, gratis"],
+ 'of.day':  ["{date} · first payment {p}","{date} · første betaling {p}","{date} · primer pago {p}"],
+ 'of.dayD': ["Cancel before then in Settings and you pay nothing","Opsig inden i Indstillinger, så betaler du ingenting","Cancela antes en Ajustes y no pagas nada"],
+ 'of.cta':  ["Start {d} days free","Start {d} dage gratis","Empezar {d} días gratis"],
+ 'of.free': ["Continue with Podimo Free","Fortsæt med Podimo Free","Seguir con Podimo Free"],
+ 'ac.h':    ["You’re all set","Du er klar","Todo listo"],
+ 'ac.sub':  ["Save your membership and your {n} shows to an account","Gem dit medlemskab og dine {n} serier på en konto","Guarda tu membresía y tus {n} shows en una cuenta"],
+ 'ac.sub0': ["Save your membership to an account","Gem dit medlemskab på en konto","Guarda tu membresía en una cuenta"],
+ 'ac.apple':["Continue with Apple","Fortsæt med Apple","Continuar con Apple"],
+ 'ac.google':["Continue with Google","Fortsæt med Google","Continuar con Google"],
+ 'ac.fb':   ["Continue with Facebook","Fortsæt med Facebook","Continuar con Facebook"],
+ 'ac.mail': ["Continue with Email","Fortsæt med e-mail","Continuar con e-mail"],
+ 'ac.legal':["By signing up, you are agreeing to Podimo’s <u>Terms of Use</u> and <u>Privacy Policy</u>","Ved at oprette dig accepterer du Podimos <u>Vilkår</u> og <u>Privatlivspolitik</u>","Al registrarte aceptas los <u>Términos de uso</u> y la <u>Política de privacidad</u> de Podimo"],
+ 'and':     [" and "," og "," y "]
+};
+/* store prices as published on podimo.com/es (EN, ES) and podimo.com/dk (DA) */
+var PRICE = { en:{p:'€4.99',d:30}, es:{p:'4,99 €',d:30}, da:{p:'99 kr.',d:14} };
+var LOCALE = { en:'en-GB', da:'da-DK', es:'es-ES' };
+
+var LANGOPT = [
+ {k:'es',n:['Spanish','Spansk','Español']},{k:'en',n:['English','Engelsk','Inglés']},
+ {k:'ar',n:['Arabic','Arabisk','Árabe']},{k:'ca',n:['Catalan','Catalansk','Catalán']},
+ {k:'zh',n:['Chinese','Kinesisk','Chino']},{k:'hr',n:['Croatian','Kroatisk','Croata']},
+ {k:'cs',n:['Czech','Tjekkisk','Checo']},{k:'da',n:['Danish','Dansk','Danés']},
+ {k:'nl',n:['Dutch','Hollandsk','Neerlandés']},{k:'fi',n:['Finnish','Finsk','Finés']},
+ {k:'fr',n:['French','Fransk','Francés']},{k:'de',n:['German','Tysk','Alemán']},
+ {k:'no',n:['Norwegian','Norsk','Noruego']}
+];
+var TOPICS = [
+ {k:'ent',n:['Entertainment','Underholdning','Entretenimiento']},
+ {k:'stories',n:['Personal Stories & Conversations','Personlige historier & samtaler','Historias personales y conversaciones']},
+ {k:'crime',n:['True crime','True crime','True crime']},
+ {k:'mind',n:['Meditation & Mindfulness','Meditation & mindfulness','Meditación y mindfulness']},
+ {k:'edu',n:['Education','Uddannelse','Educación']},
+ {k:'hist',n:['History','Historie','Historia']},
+ {k:'sci',n:['Science','Videnskab','Ciencia']},
+ {k:'rel',n:['Relationships','Forhold','Relaciones']},
+ {k:'health',n:['Health & Personal Development','Sundhed & personlig udvikling','Salud y desarrollo personal']},
+ {k:'biz',n:['Business','Erhverv','Negocios']},
+ {k:'pol',n:['Politics','Politik','Política']},
+ {k:'tech',n:['Technology','Teknologi','Tecnología']},
+ {k:'sport',n:['Sports','Sport','Deportes']}
+];
+/* shows and audiobooks from podimo.com/mx and the recorded onboarding; tags are our sort keys */
+var SHOWS = [
+ {k:'whitexican',t:'pod',n:'Whitexican en rehab',by:'Rob Paper Sheet',ex:1,tags:['ent','stories']},
+ {k:'breve',t:'pod',n:'Breve historia de la guerra',by:'Migala',ex:1,tags:['hist']},
+ {k:'historias',t:'pod',n:'Historias perdidas',by:'Clío Podcast',ex:1,tags:['hist','crime']},
+ {k:'ciencia',t:'pod',n:'Ciencia siniestra',by:'Carolina Jefillysh',ex:1,tags:['sci','crime']},
+ {k:'humanidad',t:'pod',n:'¿Cómo se inventó la humanidad?',by:'César Hernández Padrón',ex:1,tags:['hist','sci']},
+ {k:'tecito',t:'pod',n:'Tecito de calzón',by:'Dama G, Vale de la Cuesta y Herbivora Punk',ex:1,tags:['ent','rel']},
+ {k:'conejilla',t:'pod',n:'Conejilla de Indias',by:'Maire Wink',ex:1,tags:['stories','rel']},
+ {k:'relatos',t:'pod',n:'Relatos de la Noche | SIN CENSURA',by:'Uriel Reyes | Sonoro Media',ex:1,tags:['crime','ent']},
+ {k:'escobar',t:'book',n:'Mi vida y mi carcel con Pablo Escobar',by:'Victoria Eugenia Henao',tags:['crime','hist']},
+ {k:'nieve',t:'book',n:'La sociedad de la nieve',by:'Pablo Vierci',tags:['hist','stories']},
+ {k:'diluvio',t:'book',n:'Esperando al diluvio',by:'Dolores Redondo',tags:['crime']},
+ {k:'inteligencia',t:'book',n:'Inteligencia emocional',by:'Daniel Goleman',tags:['health','mind']},
+ {k:'ritos',t:'book',n:'Los ritos del agua',by:'Eva García Sáenz de Urturi',tags:['crime']}
+];
+var SH = {}; SHOWS.forEach(function(s){ SH[s.k]=s; });
+var DEFAULT_CAR = ['breve','historias','ciencia','humanidad','tecito'];
+
+/* ================= state ================= */
+var S0 = {lang:'en', theme:'dark'};
+function defaults(){ return { lang:S0.lang, theme:S0.theme, langs:['es','en'], types:['pod','book'],
+  topics:['ent','stories','crime','hist','health'], follow:['whitexican','breve','historias'], tab:'pod' }; }
+var S = defaults();
+function L(){ return LANGS.indexOf(S.lang); }
+function t(k,v){ var s=(T[k]||[k])[L()]; if(v) Object.keys(v).forEach(function(x){ s=s.split('{'+x+'}').join(v[x]); }); return s; }
+function joinL(a){ return a.length<2 ? (a[0]||'') : a.slice(0,-1).join(', ')+t('and')+a[a.length-1]; }
+function nm(o){ return o.n[L()]; }
+function toggle(arr,k){ var i=arr.indexOf(k); if(i>-1) arr.splice(i,1); else arr.push(k); }
+function img(k){ return 'img/'+k+'.webp'; }
+
+/* ================= builders (re-run on language change) ================= */
+var tickSvg='<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10"/></svg>';
+function buildLangs(){ var g=document.getElementById('langList'); g.innerHTML='';
+  LANGOPT.forEach(function(o){ var b=document.createElement('button'); b.className='pd-row'; b.dataset.v=o.k;
+    b.innerHTML='<span>'+nm(o)+'</span><span class="rc">'+tickSvg+'</span>';
+    b.addEventListener('click',function(){ toggle(S.langs,o.k); syncScreen(); }); g.appendChild(b); }); }
+function buildTopics(){ var g=document.getElementById('topicList'); g.innerHTML='';
+  TOPICS.forEach(function(o){ var b=document.createElement('button'); b.className='pd-chip'; b.dataset.v=o.k; b.textContent=nm(o);
+    b.addEventListener('click',function(){ toggle(S.topics,o.k); syncScreen(); }); g.appendChild(b); }); }
+function showRow(s){
+  var b=document.createElement('button'); b.className='pd-show'; b.dataset.v=s.k;
+  b.innerHTML='<img src="'+img(s.k)+'" alt=""><span class="tx"><b>'+s.n+'</b><span>'+(s.ex?'<em>'+t('sh.excl')+'</em> · ':'')+s.by+'</span></span>'
+   +'<span class="pd-add"><svg class="p" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="y" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>';
+  b.addEventListener('click',function(){ toggle(S.follow,s.k); syncScreen(); });
+  return b;
+}
+var showKey='';
+function buildShows(force){
+  var key=S.lang+'|'+S.tab+'|'+S.topics.join();
+  if(!force && key===showKey) return; showKey=key;
+  var g=document.getElementById('showList'); g.innerHTML='';
+  var list=SHOWS.filter(function(s){ return s.t===S.tab; });
+  var hit=list.filter(function(s){ return s.tags.some(function(x){ return S.topics.indexOf(x)>-1; }); });
+  var rest=list.filter(function(s){ return hit.indexOf(s)<0; });
+  if(hit.length){ var l=document.createElement('div'); l.className='pd-lab'; l.textContent=t('sh.for'); g.appendChild(l);
+    hit.forEach(function(s){ g.appendChild(showRow(s)); }); }
+  if(rest.length){ var l2=document.createElement('div'); l2.className='pd-lab'; l2.textContent=t('sh.more'); g.appendChild(l2);
+    rest.forEach(function(s){ g.appendChild(showRow(s)); }); }
+}
+function buildDashes(){ document.querySelectorAll('.pd-dash').forEach(function(d){ var n=+d.dataset.step, h='';
+  for(var i=1;i<=6;i++) h+='<i class="'+(i<=n?'on':'')+'"></i>'; d.innerHTML=h; }); }
+function applyStatic(){
+  document.documentElement.lang=S.lang;
+  document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=t(el.dataset.t); });
+  document.querySelectorAll('[data-th]').forEach(function(el){ el.innerHTML=t(el.dataset.th); });
+  buildLangs(); buildTopics(); buildShows(true); buildDashes();
+}
+
+/* ================= everything downstream reads S ================= */
+function followed(){ return S.follow.filter(function(k){ return SH[k]; }); }
+function syncScreen(){
+  var li=L(), pr=PRICE[S.lang];
+  document.querySelectorAll('#langList .pd-row').forEach(function(b){ b.classList.toggle('on', S.langs.indexOf(b.dataset.v)>-1); });
+  document.getElementById('langBtn').disabled=!S.langs.length;
+  document.querySelectorAll('[data-id=type] .pd-type').forEach(function(b){ b.classList.toggle('on', S.types.indexOf(b.dataset.v)>-1); });
+  document.getElementById('typeBtn').disabled=!S.types.length;
+  document.querySelectorAll('#topicList .pd-chip').forEach(function(b){ b.classList.toggle('on', S.topics.indexOf(b.dataset.v)>-1); });
+  document.getElementById('topBtn').disabled=!S.topics.length;
+  buildShows();
+  document.querySelectorAll('#showTabs button').forEach(function(b){ b.classList.toggle('on', b.dataset.tab===S.tab); });
+  document.querySelectorAll('#showList .pd-show').forEach(function(b){ b.classList.toggle('on', S.follow.indexOf(b.dataset.v)>-1); });
+  var f=followed(), n=f.length;
+  document.getElementById('showBtn').textContent = n ? t('sh.cta',{n:n}) : t('sh.cta0');
+
+  /* loader reads every answer back */
+  var langNames=LANGOPT.filter(function(o){ return S.langs.indexOf(o.k)>-1; }).map(nm);
+  var tops=TOPICS.filter(function(o){ return S.topics.indexOf(o.k)>-1; }).map(nm);
+  var topTxt = tops.length>2 ? tops.slice(0,2).join(', ')+' +'+(tops.length-2) : joinL(tops);
+  var ls=document.querySelectorAll('#loadSteps .pd-ls .t');
+  ls[0].innerHTML=t('ld.lang')+'<small>'+joinL(langNames)+'</small>';
+  ls[1].innerHTML=t('ld.int')+'<small>'+topTxt+'</small>';
+  ls[2].innerHTML= n>1 ? t('ld.lib',{n:n})+'<small>'+f.slice(0,2).map(function(k){ return SH[k].n; }).join(', ')+(n>2?' +'+(n-2):'')+'</small>'
+                 : n===1 ? t('ld.lib1',{x:SH[f[0]].n}) : t('ld.lib0');
+  ls[3].innerHTML=t('ld.wrap');
+  var fc=f.concat(DEFAULT_CAR.filter(function(k){ return f.indexOf(k)<0; })).slice(0,5), FP=[[18,70,-8],[250,96,7],[-14,520,6],[262,560,-6],[150,690,4]];
+  document.getElementById('floatCovers').innerHTML=fc.map(function(k,i){ var p=FP[i];
+    return '<img src="'+img(k)+'" alt="" style="left:'+p[0]+'px;top:'+p[1]+'px;transform:rotate('+p[2]+'deg)">'; }).join('');
+
+  /* paywall: their shows, their price */
+  var car=f.concat(DEFAULT_CAR.filter(function(k){ return f.indexOf(k)<0; })).slice(0,6);
+  document.getElementById('payCar').innerHTML=car.map(function(k){ return '<img src="'+img(k)+'" alt="'+SH[k].n+'">'; }).join('');
+  document.getElementById('payKick').textContent = n ? t('pw.kick') : t('pw.kick0');
+  document.getElementById('payH').textContent = n>1 ? t('pw.hN',{x:SH[f[0]].n,n:n-1}) : n===1 ? t('pw.h1',{x:SH[f[0]].n}) : t('pw.h0');
+  document.getElementById('payPrice').innerHTML=t('pw.price',{d:pr.d,p:pr.p});
+
+  /* offer: Free vs Premium, then the real charge date */
+  var ex=f.filter(function(k){ return SH[k].ex; });
+  document.getElementById('offH').textContent = ex.length>1 ? t('of.hN',{n:ex.length}) : ex.length===1 ? t('of.h1',{x:SH[ex[0]].n}) : t('of.h0');
+  var y='<span class="pd-y">'+tickSvg+'</span>', yg='<span class="pd-y g">'+tickSvg+'</span>', no='<span class="pd-n">—</span>';
+  var exNames = ex.length ? '<small>'+ex.slice(0,2).map(function(k){ return SH[k].n; }).join(', ')+(ex.length>2?' +'+(ex.length-2):'')+'</small>' : '';
+  document.getElementById('offCmp').innerHTML=
+    '<div class="r hd"><span></span><span>'+t('of.colF')+'</span><span>'+t('of.colP')+'</span></div>'
+   +'<div class="r"><span>'+t('of.r1')+'</span><span>'+yg+'</span><span>'+y+'</span></div>'
+   +'<div class="r"><span>'+t('of.r2')+exNames+'</span><span>'+no+'</span><span>'+y+'</span></div>'
+   +'<div class="r"><span>'+t('of.r3')+'</span><span>'+no+'</span><span>'+y+'</span></div>'
+   +'<div class="r"><span>'+t('of.r4')+'</span><span>'+no+'</span><span>'+y+'</span></div>';
+  var d=new Date(); d.setDate(d.getDate()+pr.d);
+  document.getElementById('offDay').textContent=t('of.day',{date:new Intl.DateTimeFormat(LOCALE[S.lang],{day:'numeric',month:'long'}).format(d),p:pr.p});
+  document.getElementById('offDayD').textContent=t('of.dayD');
+  document.getElementById('offerCta').textContent=t('of.cta',{d:pr.d});
+  document.getElementById('acSub').textContent = n ? t('ac.sub',{n:n}) : t('ac.sub0');
+}
+
+/* ================= router ================= */
+var ORDER=['welcome','lang','type','topics','shows','notif','loader','paywall','offer','account'];
+var LABEL={welcome:'Welcome',lang:'Languages',type:'Podcasts / audiobooks',topics:'Topics',shows:'Shows to follow',notif:'Notifications',loader:'Loader',paywall:'Paywall',offer:'Offer on skip',account:'Account'};
+var scr={}, hist=[], cur='welcome', loadTimers=[];
+document.querySelectorAll('.scr').forEach(function(s){ scr[s.dataset.id]=s; });
+
+function chrome(){ var lt=S.theme==='light';
+  document.getElementById('sbar').classList.toggle('dk',lt); document.getElementById('homebar').classList.toggle('dk',lt); }
+function enter(id){ chrome(); paintChips(); paintPanel(); clearLoad();
+  document.getElementById('ntAlert').classList.remove('show');
+  if(id==='loader') runLoader(); }
+function go(id,opts){
+  opts=opts||{}; if(id===cur) return;
+  var from=scr[cur], to=scr[id];
+  if(!opts.back) hist.push(cur);
+  if(from){ from.classList.remove('is-active');
+    if(!to.classList.contains('sheet') && !from.classList.contains('sheet')) from.classList.add('is-past'); }
+  if(to.classList.contains('sheet')) from.classList.add('is-active');
+  Object.keys(scr).forEach(function(k){ if(k!==id && !(to.classList.contains('sheet') && k===cur)) scr[k].classList.remove('is-active'); });
+  to.classList.remove('is-past'); to.classList.add('is-active');
+  cur=id; enter(id);
+}
+function back(){
+  if(!hist.length) return;
+  var prev=hist.pop();
+  scr[cur].classList.remove('is-active');
+  scr[prev].classList.remove('is-past'); scr[prev].classList.add('is-active');
+  cur=prev; enter(prev);
+}
+function jump(id){
+  var i=ORDER.indexOf(id);
+  Object.keys(scr).forEach(function(k){ scr[k].classList.add('nofx'); scr[k].classList.remove('is-active','is-past'); });
+  hist=ORDER.slice(0,i<0?0:i);
+  if(id==='offer') scr.paywall.classList.add('is-active');
+  scr[id].classList.add('is-active'); cur=id;
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    Object.keys(scr).forEach(function(k){ scr[k].classList.remove('nofx'); }); }); });
+  syncScreen(); enter(id);
+}
+function paintChips(){
+  var c=document.getElementById('chips');
+  if(!c.children.length){
+    ORDER.forEach(function(id){
+      var b=document.createElement('button'); b.className='chip'+(id==='offer'?' offer':''); b.textContent=LABEL[id];
+      b.dataset.id=id; b.onclick=function(){ stopDemo(); jump(id); }; c.appendChild(b);
+    });
+  }
+  c.querySelectorAll('.chip').forEach(function(b){ b.classList.toggle('on', b.dataset.id===cur); });
+}
+function clearLoad(){ loadTimers.forEach(clearTimeout); loadTimers=[]; }
+function runLoader(){
+  var k=demo.on?0.48:1;
+  var steps=[].slice.call(document.querySelectorAll('#loadSteps .pd-ls'));
+  steps.forEach(function(s){ s.classList.remove('on','show'); });
+  var imgs=[].slice.call(document.querySelectorAll('#floatCovers img'));
+  imgs.forEach(function(im){ im.classList.remove('in'); });
+  imgs.forEach(function(im,i){ loadTimers.push(setTimeout(function(){ im.classList.add('in'); },(150+i*450)*k)); });
+  steps.forEach(function(s,i){
+    loadTimers.push(setTimeout(function(){ s.classList.add('show'); },(300+i*1000)*k));
+    loadTimers.push(setTimeout(function(){ s.classList.add('on'); },(1100+i*1000)*k));
+  });
+  loadTimers.push(setTimeout(function(){ if(cur==='loader') go('paywall'); },4700*k));
+}
+
+/* ================= wiring ================= */
+document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click',function(){ if(!b.disabled) go(b.dataset.go); }); });
+document.querySelectorAll('[data-back]').forEach(function(b){ b.addEventListener('click',back); });
+document.querySelectorAll('[data-id=type] .pd-type').forEach(function(b){ b.addEventListener('click',function(){ toggle(S.types,b.dataset.v);
+  if(S.types.length===1) S.tab=S.types[0]; syncScreen(); }); });
+document.querySelectorAll('#showTabs button').forEach(function(b){ b.addEventListener('click',function(){ S.tab=b.dataset.tab; syncScreen(); }); });
+document.getElementById('ntBtn').addEventListener('click',function(){ document.getElementById('ntAlert').classList.add('show'); });
+document.getElementById('payClose').addEventListener('click',function(){ go('offer'); });
+document.getElementById('payCta').addEventListener('click',function(){ go('account'); });
+document.getElementById('offerCta').addEventListener('click',function(){ go('account'); });
+document.getElementById('offFree').addEventListener('click',function(){ go('account'); });
+document.getElementById('offClose').addEventListener('click',function(){ back(); });
+document.querySelector('[data-id=offer] .pd-dim').addEventListener('click',function(){ back(); });
+
+function setSeg(id,attr,val){ document.querySelectorAll('#'+id+' button').forEach(function(b){ b.classList.toggle('on', b.dataset[attr]===val); }); }
+function setLang(l){ S.lang=l; S0.lang=l; setSeg('segLang','lang',l); applyStatic(); syncScreen(); paintPanel(); }
+function setTheme(th){ S.theme=th; S0.theme=th; document.getElementById('phoneIn').classList.toggle('light',th==='light'); setSeg('segTheme','theme',th); chrome(); }
+document.querySelectorAll('#segLang button').forEach(function(b){ b.addEventListener('click',function(){ stopDemo(); setLang(b.dataset.lang); }); });
+document.querySelectorAll('#segTheme button').forEach(function(b){ b.addEventListener('click',function(){ setTheme(b.dataset.theme); }); });
+
+/* ================= the 30-second walkthrough ================= */
+var demo={tok:0,on:false,t0:0,iv:null}, finger=document.getElementById('finger'), phoneIn=document.getElementById('phoneIn');
+function W(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+function cap(txt){ document.getElementById('demoTxt').textContent=txt; }
+async function tap(sel,tok){
+  if(demo.tok!==tok) throw 0;
+  var el=document.querySelector(sel); if(!el) return;
+  var r=el.getBoundingClientRect(), p=phoneIn.getBoundingClientRect(), z=p.width/phoneIn.offsetWidth||1;
+  finger.style.left=((r.left-p.left+r.width/2)/z)+'px'; finger.style.top=((r.top-p.top+r.height/2)/z)+'px';
+  finger.classList.add('show'); await W(380); if(demo.tok!==tok) throw 0;
+  finger.classList.add('press'); await W(120); finger.classList.remove('press'); el.click(); await W(160);
+  if(demo.tok!==tok) throw 0;
+}
+async function pause(ms,tok){ await W(ms); if(demo.tok!==tok) throw 0; }
+function startDemo(){
+  stopDemo(); var tok=++demo.tok; demo.on=true; demo.t0=Date.now();
+  var keep={lang:S.lang,theme:S.theme}; S=defaults(); S.lang=keep.lang; S.theme=keep.theme;
+  S.follow=['breve','historias']; S.topics=['ent','stories','hist','health'];
+  applyStatic(); jump('welcome');
+  document.getElementById('demoCap').classList.remove('hidden');
+  demo.iv=setInterval(function(){ document.getElementById('demoProg').style.width=Math.min(100,(Date.now()-demo.t0)/290)+'%'; },200);
+  (async function(){
+    try{
+      cap('A new install opens on Get started — no account yet.'); await pause(1500,tok);
+      await tap('#welBtn',tok);
+      cap('Your language question, unchanged.'); await pause(600,tok);
+      await tap('#langList [data-v=da]',tok); await pause(300,tok); await tap('#langBtn',tok);
+      cap('Podcasts, audiobooks, or both.'); await pause(550,tok);
+      await tap('#typeBtn',tok);
+      cap('Five topics. Say, true crime.'); await pause(550,tok);
+      await tap('#topicList [data-v=crime]',tok); await pause(300,tok); await tap('#topBtn',tok);
+      cap('Shows for those topics come first. They follow one.'); await pause(700,tok);
+      await tap('#showList [data-v=whitexican]',tok); await pause(450,tok); await tap('#showBtn',tok);
+      cap('Your notification ask, where it is today.'); await pause(550,tok);
+      await tap('#ntBtn',tok); await pause(250,tok); await tap('#ntAllow',tok);
+      cap('Your loader, now before the price, naming their answers.'); await pause(2500,tok);
+      cap('The paywall opens on the shows they just followed, with your 4.7 and 1 million listeners.'); await pause(2600,tok);
+      cap('They skip. One sheet: Free vs Premium, and the exact day they would pay.'); await tap('#payClose',tok); await pause(2400,tok);
+      cap('That is the flow. The account comes after, once there is something to save.');
+      finger.classList.remove('show'); await pause(2000,tok); stopDemo();
+    }catch(e){}
+  })();
+}
+function stopDemo(){ if(!demo.on) return; demo.tok++; demo.on=false; clearInterval(demo.iv); finger.classList.remove('show','press');
+  document.getElementById('demoCap').classList.add('hidden'); }
+document.getElementById('demoBtn').addEventListener('click',startDemo);
+document.getElementById('demoStop').addEventListener('click',stopDemo);
+phoneIn.addEventListener('pointerdown',function(e){ if(e.isTrusted && demo.on) stopDemo(); });
+</script>
+<script>
+/* ---- the short panel: hypothesis + potential outcome, nothing else ---- */
+var PANEL = {
+welcome:{n:2,t:'Ask for the account after the paywall',
+ hyp:'Try opening on Get started instead of four sign-in buttons, <b>because today Apple, Google, Facebook or email — then email, name and password on three more screens — all come before anyone has heard a single show</b>.',
+ kept:'Your floating cover collage, your welcome line word for word, your purple pill. Returning members still have Log in.',
+ out:'CR +8% · ARPU +17%'},
+lang:{ctx:true,t:'Which languages do you listen to?',
+ kept:'Untouched — your list rows with the circle that turns into a purple tick, Spanish first, and the Search pill docked next to Continue. The languages they pick are now read back on the loader.'},
+type:{ctx:true,t:'What are you into?',
+ kept:'Untouched — your two cover cards with the purple check. If they pick only one, the next screen opens on that tab.'},
+topics:{ctx:true,t:'Pick five topics',
+ kept:'Untouched — your pill chips that fill purple, all thirteen topics in your order. The topics now sort the next screen and appear on the loader.'},
+shows:{ctx:true,t:'The most popular podcasts and audiobooks',
+ kept:'Your Podcasts / Audiobooks tabs, your rows with “Exclusive”, the plus that turns into a check and the “2 added - Continue” button. Shows that match their topics are listed first, and the ones they follow go on to the paywall.'},
+notif:{ctx:true,t:'Never miss an episode',
+ kept:'Your heart-and-square illustration, your copy, Enable, the skip arrow and the system prompt, in the same place as today.'},
+loader:{n:4,t:'Run your loader before the price, not after',
+ hyp:'Try playing your setup loader in front of the paywall and letting each line name what it is using, <b>because today the same loader runs after purchase, when it can no longer help anyone decide</b>. Change a language or follow another show and these lines change.',
+ kept:'Your tilted covers floating on black and your tick list — Adjusting language, Gathering your interests, Wrapping things up. The covers are the shows they followed.',
+ out:'CR +10–15%'},
+paywall:{n:1,t:'Put the shows they picked on the paywall',
+ hyp:'Try filling your carousel with the shows they just followed and naming them in the headline, <b>because today every new listener sees “All our exclusive content” two screens after telling you exactly what they want to hear</b>. Go back and follow another show — it joins the headline.',
+ n2:5, hyp2:'Try your 4.7 App Store rating and “more than 1 million listeners” directly under the price, <b>because both lead your homepage and neither appears anywhere in the app flow</b>.',
+ out2:'CR +10–15%',
+ kept:'Your carousel of square covers, the small purple kicker, your headline weight, “30 days free — then €4.99/month · Cancel anytime”, Start free trial, Terms · Privacy · Restore and the skip arrow top right.',
+ out:'CR +15–20%'},
+offer:{n:3,t:'Give a second chance when they skip',
+ hyp:'Try this sheet when they tap the skip arrow, <b>because today skipping drops them straight into the app with no reason to come back to the paywall</b>. It shows what Free leaves out and the exact day the trial would charge — same Premium plan, same trial, nothing discounted.',
+ kept:'Your near-black sheet, purple ticks and pill button. Every Free and Premium line is from podimo.com and your App Store description.',
+ out:'ARPU +10–15%'},
+account:{n:2,t:'Ask for the account after the paywall',
+ hyp:'Try asking for the account here, right after the trial starts, <b>because now there is something to save — a membership and the shows they followed</b>.',
+ kept:'Your four sign-in buttons exactly as they ship — the white Apple pill, outlined Google, Facebook and Email — and your terms line.',
+ out:'CR +8% · ARPU +17%'}
+};
+
+function outBlock(lab,val){
+  return '<div class="pn-out"><div class="lab">'+lab+'</div><div class="v">'+val+'</div></div>';
+}
+function paintPanel(){
+  var d=PANEL[cur]; if(!d) return;
+  var h='';
+  if(d.ctx){
+    h += '<div class="pn-n ctx">Context · no change proposed</div><h3 class="pn-t">'+d.t+'</h3>'
+       + '<div class="pn-kept">'+d.kept+'</div>';
+  } else {
+    h += '<div class="pn-n">Idea '+d.n+' of 5</div><h3 class="pn-t">'+d.t+'</h3>'
+       + '<p class="pn-hyp">'+d.hyp+'</p>'
+       + outBlock('Potential outcome · based on Adapty data', d.out);
+    if(d.hyp2){
+      h += '<div class="pn-sep"></div>'
+         + '<div class="pn-n">Idea '+d.n2+' of 5</div>'
+         + '<p class="pn-hyp" style="margin-top:12px">'+d.hyp2+'</p>'
+         + outBlock('Potential outcome · based on Adapty data', d.out2);
+    }
+    h += '<div class="pn-kept"><b>Your design, unchanged.</b> '+d.kept+'</div>';
+  }
+  if(S.lang!=='en') h += '<div class="pn-kept"><b>Language.</b> Screens are shown in '+(S.lang==='da'?'Danish, with the price and 14-day trial published on podimo.com/dk':'Spanish, with the price and 30-day trial published on podimo.com/es')+'. Translation is ours; show titles stay as published.</div>';
+  h += '<div class="pn-foot">Ranges are Adapty’s expected effect from tests across 30,000+ subscription apps — not measured lift for Podimo. '
+     + 'Prices, ratings, plan lines and covers come from your own published material.</div>';
+  document.getElementById('panel').innerHTML = h;
+}
+
+/* ---- views, jumps from the overview ---- */
+function showView(v){
+  if(v!=='proto') stopDemo();
+  document.querySelectorAll('.view').forEach(function(x){ x.classList.remove('on'); });
+  document.getElementById('view-'+v).classList.add('on');
+  document.querySelectorAll('.nav-links button[data-view]').forEach(function(b){ b.classList.toggle('on', b.dataset.view===v); });
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('[data-view]').forEach(function(b){ b.addEventListener('click',function(){ showView(b.dataset.view); }); });
+document.querySelectorAll('.idea[data-jump]').forEach(function(b){
+  b.addEventListener('click',function(){ showView('proto'); jump(b.dataset.jump); });
+});
+document.querySelectorAll('[data-demo]').forEach(function(b){ b.addEventListener('click',function(){ showView('proto'); startDemo(); }); });
+
+applyStatic();
+scr.welcome.classList.add('is-active');
+syncScreen(); chrome(); paintChips(); paintPanel();
+if(/[?&]open=proto/.test(location.search)) showView('proto');
+</script>
+</body>
+</html>
