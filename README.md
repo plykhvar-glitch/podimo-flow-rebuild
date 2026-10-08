@@ -2,7 +2,7 @@
 
 **Live:** https://plykhvar-glitch.github.io/podimo-flow-rebuild/
 
-Five ranked ideas for Podimo's iOS onboarding and paywall. Each one is built into a clickable prototype in Podimo's own design: the near-black screens, the purple pill buttons, the cover cards, the topic chips, the tilted-cover loader and the carousel paywall. Only the order changed, plus a few things Podimo already has but does not show when people decide.
+Five ranked ideas for Podimo's iOS onboarding and paywall. Each one is built into a clickable prototype in Podimo's own design: the near-black screens, the purple pill buttons, the show lists and tabs, the tilted-cover loader and the carousel paywall. Only the order changed, plus a few things Podimo already has but does not show when people decide.
 
 | # | Idea | Potential outcome |
 | :-- | :-- | :-- |
@@ -12,7 +12,7 @@ Five ranked ideas for Podimo's iOS onboarding and paywall. Each one is built int
 | 04 | Run your loader before the price, not after | CR +10–15% |
 | 05 | Show your 4.7 and your million listeners | CR +10–15% |
 
-The prototype opens on the Overview. Switch to Prototype for the phone, with jump chips for every screen, EN / DA / ES, Light / Dark and a 30-second walkthrough. Add `?open=proto` to the link to open straight on the prototype.
+The prototype carries only the screens an idea lands on (welcome, loader, paywall, offer, account) plus the shows screen that feeds them; the language, topic and notification screens are unchanged and left out. Switch to Prototype for the phone, with jump chips for every screen, EN / DA / ES, Light / Dark and a 30-second walkthrough. Add `?open=proto` to the link to open straight on the prototype.
 
 **Grounding.** Prices, trial lengths, plan lines, the 4.7 rating, "more than 1 million listeners" and the show and audiobook covers all come from Podimo's own App Store listing, podimo.com (es, dk, mx) and the in-app screens. EN and ES show the Spanish storefront price (30 days free, then €4.99/month). DA shows the Danish one (14 days free, then 99 kr./month).
 

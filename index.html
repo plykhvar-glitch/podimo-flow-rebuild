@@ -211,37 +211,6 @@ a{color:inherit}
 .pd-legal{font-size:11.5px;line-height:1.45;color:var(--pd-sub);text-align:center;margin-top:16px}
 .pd-legal u{color:var(--pd-ink2)}
 
-/* languages — their list rows */
-.pd-rows{display:flex;flex-direction:column;gap:8px;margin-top:20px;padding-bottom:12px}
-.pd-row{display:flex;align-items:center;justify-content:space-between;width:100%;height:46px;padding:0 14px;
-  border:1px solid var(--pd-line);border-radius:var(--r-ctl);background:var(--pd-row);font:500 15px/1 'Inter',sans-serif;color:var(--pd-ink);text-align:left;transition:.15s}
-.pd-row .rc{width:20px;height:20px;border-radius:50%;border:1.5px solid #3A3940;display:grid;place-items:center}
-.pd-row .rc svg{width:18px;height:18px;stroke:var(--pd-purple);stroke-width:2.2;fill:none;opacity:0}
-.pd-row.on{background:var(--pd-card);border-color:var(--pd-card);color:#C3B2FF}
-.pd-row.on .rc{border-color:transparent}
-.pd-row.on .rc svg{opacity:1}
-.pd-footrow{display:flex;gap:10px}
-.pd-search{flex:none;width:44%;height:50px;border-radius:25px;background:var(--pd-field);display:flex;align-items:center;gap:10px;padding:0 18px;
-  font:500 15px/1 'Inter',sans-serif;color:var(--pd-sub)}
-.pd-search svg{width:18px;height:18px;stroke:var(--pd-sub);fill:none;stroke-width:2}
-
-/* podcasts / audiobooks cards */
-.pd-type{display:block;width:100%;text-align:left;background:var(--pd-card);border-radius:var(--r-media);padding:16px 0 14px;margin-top:12px;overflow:hidden;transition:.15s;border:2px solid transparent}
-.pd-type:first-child{margin-top:20px}
-.pd-type .hd{display:flex;align-items:center;justify-content:space-between;padding:0 16px}
-.pd-type .hd b{font-size:21px;font-weight:700;letter-spacing:-.02em}
-.pd-chk{width:26px;height:26px;border-radius:50%;border:1.5px solid #55535B;display:grid;place-items:center;transition:.15s}
-.pd-chk svg{width:14px;height:14px;stroke:#fff;stroke-width:2.6;fill:none;opacity:0;stroke-linecap:round;stroke-linejoin:round}
-.pd-type.on .pd-chk,.pd-show.on .pd-add{background:var(--pd-purple);border-color:var(--pd-purple)}
-.pd-type.on .pd-chk svg,.pd-show.on .pd-add .y{opacity:1}
-.pd-type .cv{display:flex;gap:8px;margin-top:14px;padding-left:0}
-.pd-type .cv img{width:104px;height:104px;border-radius:6px;display:block;flex:none;object-fit:cover}
-
-/* topic chips */
-.pd-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.pd-chip{height:34px;padding:0 13px;border-radius:17px;border:1px solid #2E2D33;font:500 14px/1 'Inter',sans-serif;color:var(--pd-sub);transition:.15s}
-.pd-chip.on{background:var(--pd-purple);border-color:var(--pd-purple);color:#fff}
-
 /* shows list — their tabs, rows and plus/check */
 .pd-tabs{display:flex;background:var(--pd-field);border-radius:20px;padding:3px;margin-top:16px}
 .pd-tabs button{flex:1;height:32px;border-radius:17px;font:500 13.5px/1 'Inter',sans-serif;color:var(--pd-sub);transition:.15s}
@@ -257,19 +226,9 @@ a{color:inherit}
 .pd-add{width:26px;height:26px;border-radius:50%;background:#2C2B30;border:1.5px solid #2C2B30;display:grid;place-items:center;flex:none;position:relative;transition:.15s}
 .pd-add svg{position:absolute;width:13px;height:13px;stroke:#fff;stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .pd-add .y{opacity:0}
+.pd-show.on .pd-add{background:var(--pd-purple);border-color:var(--pd-purple)}
+.pd-show.on .pd-add .y{opacity:1}
 .pd-show.on .pd-add .p{opacity:0}
-
-/* notifications primer */
-.pd-ill{display:grid;place-items:center;height:330px}
-.pd-ill svg{width:150px;height:150px}
-.pd-alert{position:absolute;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45)}
-.pd-alert.show{display:flex}
-.pd-alert .box{width:270px;border-radius:14px;background:rgba(48,47,52,.97);text-align:center;overflow:hidden}
-.pd-alert .box p{padding:18px 16px 14px;font-size:13px;line-height:1.35;color:#E6E4E8}
-.pd-alert .box p b{display:block;font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;line-height:1.25}
-.pd-alert .bt{display:flex;border-top:1px solid rgba(255,255,255,.14)}
-.pd-alert .bt button{flex:1;height:44px;font-size:16px;color:#3E9BFF}
-.pd-alert .bt button+button{border-left:1px solid rgba(255,255,255,.14);font-weight:600}
 
 /* loader — their tilted covers on black + tick list */
 .scr--load .scr-body{padding:0}
@@ -353,11 +312,6 @@ a{color:inherit}
 .phone-in.light{--pd-bg:#F5F4F8;--pd-card:#FFFFFF;--pd-field:#E9E7EE;--pd-row:#FFFFFF;--pd-line:#E4E2E9;
   --pd-ink:#111014;--pd-ink2:#2A2830;--pd-sub:#625F68;--pd-muted:#8D8A93;--pd-btn-off:#C9BCF5}
 .phone-in.light .screenwrap{background:var(--pd-bg)}
-.phone-in.light .pd-row.on{background:#ECE6FF;border-color:#D9CCFF;color:var(--pd-purple-dk)}
-.phone-in.light .pd-row .rc{border-color:#CFCCD6}
-.phone-in.light .pd-type{box-shadow:0 2px 12px rgba(20,16,30,.06)}
-.phone-in.light .pd-chk{border-color:#CFCCD6}
-.phone-in.light .pd-chip{border-color:#D8D5DE}
 .phone-in.light .pd-show{border-bottom-color:#E7E5EC}
 .phone-in.light .pd-add{background:#E3E0EA;border-color:#E3E0EA}
 .phone-in.light .pd-add .p{stroke:#3A3940}
@@ -380,13 +334,6 @@ a{color:inherit}
 .phone-in.light .pd-ab.apple{background:#111;color:#fff;border-color:#111}
 .phone-in.light .pd-ab.apple svg{fill:#fff}
 .phone-in.light .pd-ls .d .ok{stroke:var(--pd-ink)}
-.phone-in.light .pd-alert .box{background:rgba(242,242,247,.97)}
-.phone-in.light .pd-alert .box p{color:#333}
-.phone-in.light .pd-alert .box p b{color:#000}
-.phone-in.light .pd-alert .bt{border-top-color:rgba(0,0,0,.12)}
-.phone-in.light .pd-alert .bt button+button{border-left-color:rgba(0,0,0,.12)}
-.phone-in.light .pd-alert .bt button{color:#007AFF}
-.phone-in.light .illbox{stroke:#C9BCF5}
 
 /* prototype toolbar, walkthrough, QR — shell styling */
 .tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:520px}
@@ -514,7 +461,7 @@ a{color:inherit}
     <div class="notes">
       <div class="note">
         <h4>We did not redesign your app</h4>
-        <p>Every screen in the prototype is yours — your near-black screens, your purple pill buttons, your cover cards, your topic chips, your tilted-cover loader and your carousel paywall. Only the order changed, plus a few things you already own but do not show at the right moment.</p>
+        <p>Every screen in the prototype is yours — your near-black screens, your purple pill buttons, your show lists and tabs, your tilted-cover loader and your carousel paywall. Only the order changed, plus a few things you already own but do not show at the right moment.</p>
       </div>
       <div class="note">
         <h4>You may have tested some of this</h4>
@@ -650,57 +597,9 @@ a{color:inherit}
     <p class="pd-wl" data-t="wel.h"></p>
   </div>
   <div class="scr-foot">
-    <button class="pd-btn" id="welBtn" data-go="lang" data-t="wel.cta"></button>
+    <button class="pd-btn" id="welBtn" data-go="shows" data-t="wel.cta"></button>
     <p class="pd-link pd-centre" data-th="wel.login"></p>
   </div>
-</section>
-
-<!-- LANGUAGES -->
-<section class="scr" data-id="lang">
-  <div class="scr-top">
-    <div class="pd-nav"><span class="pd-dash" data-step="1"></span></div>
-    <h2 class="pd-h" data-t="lang.h"></h2>
-    <p class="pd-sub" data-t="lang.sub"></p>
-  </div>
-  <div class="scr-body"><div class="pd-rows" id="langList"></div></div>
-  <div class="scr-foot">
-    <div class="pd-footrow">
-      <span class="pd-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span data-t="lang.search"></span></span>
-      <button class="pd-btn" id="langBtn" data-go="type" data-t="cont"></button>
-    </div>
-  </div>
-</section>
-
-<!-- PODCASTS / AUDIOBOOKS -->
-<section class="scr" data-id="type">
-  <div class="scr-top">
-    <div class="pd-nav"><button class="pd-back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="pd-dash" data-step="2"></span></div>
-    <h2 class="pd-h" data-t="type.h"></h2>
-    <p class="pd-sub" data-t="type.sub"></p>
-  </div>
-  <div class="scr-body">
-    <button class="pd-type" data-v="pod">
-      <span class="hd"><b data-t="type.pod"></b><span class="pd-chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></span>
-      <span class="cv"><img src="img/breve.webp" alt=""><img src="img/whitexican.webp" alt=""><img src="img/historias.webp" alt=""><img src="img/humanidad.webp" alt=""></span>
-    </button>
-    <button class="pd-type" data-v="book">
-      <span class="hd"><b data-t="type.book"></b><span class="pd-chk"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></span>
-      <span class="cv"><img src="img/escobar.webp" alt=""><img src="img/nieve.webp" alt=""><img src="img/diluvio.webp" alt=""><img src="img/ritos.webp" alt=""></span>
-    </button>
-    <div style="height:12px"></div>
-  </div>
-  <div class="scr-foot"><button class="pd-btn" id="typeBtn" data-go="topics" data-t="cont"></button></div>
-</section>
-
-<!-- TOPICS -->
-<section class="scr" data-id="topics">
-  <div class="scr-top">
-    <div class="pd-nav"><button class="pd-back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="pd-dash" data-step="3"></span></div>
-    <h2 class="pd-h" data-t="top.h"></h2>
-    <p class="pd-sub" data-t="top.sub"></p>
-  </div>
-  <div class="scr-body"><div class="pd-chips" id="topicList"></div></div>
-  <div class="scr-foot"><button class="pd-btn" id="topBtn" data-go="shows" data-t="cont"></button></div>
 </section>
 
 <!-- SHOWS -->
@@ -712,24 +611,7 @@ a{color:inherit}
     <div class="pd-tabs" id="showTabs"><button data-tab="pod" data-t="type.pod"></button><button data-tab="book" data-t="type.book"></button></div>
   </div>
   <div class="scr-body"><div class="pd-shows" id="showList"></div></div>
-  <div class="scr-foot"><button class="pd-btn" id="showBtn" data-go="notif"></button></div>
-</section>
-
-<!-- NOTIFICATIONS -->
-<section class="scr" data-id="notif">
-  <div class="scr-top">
-    <div class="pd-nav"><button class="pd-back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="pd-dash" data-step="5"></span><button class="pd-skip" data-go="loader" aria-label="Skip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-    <h2 class="pd-h" data-t="nt.h"></h2>
-    <p class="pd-sub" data-t="nt.sub"></p>
-  </div>
-  <div class="scr-body">
-    <div class="pd-ill"><svg viewBox="0 0 150 150" fill="none"><rect class="illbox" x="22" y="34" width="96" height="96" rx="24" stroke="#3B2C78" stroke-width="5"/><path d="M112 62c-5-4-22-15-22-29 0-7 5-12 11-12 5 0 9 3 11 7 2-4 6-7 11-7 6 0 11 5 11 12 0 14-17 25-22 29Z" fill="#794AF9"/></svg></div>
-  </div>
-  <div class="scr-foot">
-    <p class="pd-helper" data-t="nt.help"></p>
-    <button class="pd-btn" id="ntBtn" data-t="nt.cta"></button>
-  </div>
-  <div class="pd-alert" id="ntAlert"><div class="box"><p><b data-t="nt.aT"></b><span data-t="nt.aD"></span></p><div class="bt"><button data-go="loader" data-t="nt.no"></button><button data-go="loader" id="ntAllow" data-t="nt.yes"></button></div></div></div>
+  <div class="scr-foot"><button class="pd-btn" id="showBtn" data-go="loader"></button></div>
 </section>
 
 <!-- LOADER -->
@@ -832,15 +714,8 @@ var T = {
  'wel.cta': ["Get started","Kom i gang","Empezar"],
  'wel.login':["Already a member? <b>Log in</b>","Allerede medlem? <b>Log ind</b>","¿Ya eres miembro? <b>Inicia sesión</b>"],
  'cont':    ["Continue","Fortsæt","Continuar"],
- 'lang.h':  ["Which languages do you listen to?","Hvilke sprog lytter du på?","¿En qué idiomas escuchas?"],
- 'lang.sub':["Make sure that you see the best podcasts and audiobooks, in languages you know.","Så du ser de bedste podcasts og lydbøger på sprog, du forstår.","Para que veas los mejores podcasts y audiolibros en idiomas que conoces."],
- 'lang.search':["Search","Søg","Buscar"],
- 'type.h':  ["What are you into?","Hvad er du til?","¿Qué te gusta?"],
- 'type.sub':["Podcasts, audiobooks, or both?","Podcasts, lydbøger eller begge dele?","¿Podcasts, audiolibros o ambos?"],
  'type.pod':["Podcasts","Podcasts","Podcasts"],
  'type.book':["Audiobooks","Lydbøger","Audiolibros"],
- 'top.h':   ["What are you into?","Hvad er du til?","¿Qué te gusta?"],
- 'top.sub': ["Help us customize your experience by selecting 5 topics","Hjælp os med at tilpasse oplevelsen ved at vælge 5 emner","Ayúdanos a personalizar tu experiencia eligiendo 5 temas"],
  'sh.h':    ["The most popular podcasts and audiobooks","De mest populære podcasts og lydbøger","Los podcasts y audiolibros más populares"],
  'sh.sub':  ["Follow to stay updated on new episodes","Følg for at få besked om nye afsnit","Síguelos para enterarte de los nuevos episodios"],
  'sh.for':  ["For your topics","Til dine emner","Para tus temas"],
@@ -848,14 +723,6 @@ var T = {
  'sh.excl': ["Exclusive","Eksklusiv","Exclusivo"],
  'sh.cta0': ["Continue","Fortsæt","Continuar"],
  'sh.cta':  ["{n} added - Continue","{n} tilføjet - Fortsæt","{n} añadidos - Continuar"],
- 'nt.h':    ["Never miss an episode from your favourite podcast","Gå aldrig glip af et afsnit fra din yndlingspodcast","No te pierdas ningún episodio de tu podcast favorito"],
- 'nt.sub':  ["Podcasts you follow will notify you when new episodes are out. You’ll also receive occasional emails with exciting news.","Podcasts, du følger, giver besked, når der kommer nye afsnit. Du får også af og til e-mails med spændende nyheder.","Los podcasts que sigues te avisarán cuando salgan nuevos episodios. También recibirás algún correo con novedades."],
- 'nt.help': ["You can change this in settings at any time.","Du kan altid ændre det under indstillinger.","Puedes cambiarlo en ajustes cuando quieras."],
- 'nt.cta':  ["Enable","Slå til","Activar"],
- 'nt.aT':   ["“Podimo” Would Like to Send You Notifications","“Podimo” vil gerne sende dig notifikationer","“Podimo” quiere enviarte notificaciones"],
- 'nt.aD':   ["Notifications may include alerts, sounds, and icon badges.","Notifikationer kan omfatte advarsler, lyde og symbolmærker.","Las notificaciones pueden incluir alertas, sonidos y globos."],
- 'nt.no':   ["Don’t Allow","Tillad ikke","No permitir"],
- 'nt.yes':  ["Allow","Tillad","Permitir"],
  'ld.lang': ["Adjusting language","Tilpasser sprog","Ajustando idioma"],
  'ld.int':  ["Gathering your interests","Samler dine interesser","Reuniendo tus intereses"],
  'ld.lib':  ["Adding {n} shows to your library","Tilføjer {n} serier til dit bibliotek","Añadiendo {n} shows a tu biblioteca"],
@@ -964,13 +831,6 @@ function img(k){ return 'img/'+k+'.webp'; }
 
 /* ================= builders (re-run on language change) ================= */
 var tickSvg='<svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10"/></svg>';
-function buildLangs(){ var g=document.getElementById('langList'); g.innerHTML='';
-  LANGOPT.forEach(function(o){ var b=document.createElement('button'); b.className='pd-row'; b.dataset.v=o.k;
-    b.innerHTML='<span>'+nm(o)+'</span><span class="rc">'+tickSvg+'</span>';
-    b.addEventListener('click',function(){ toggle(S.langs,o.k); syncScreen(); }); g.appendChild(b); }); }
-function buildTopics(){ var g=document.getElementById('topicList'); g.innerHTML='';
-  TOPICS.forEach(function(o){ var b=document.createElement('button'); b.className='pd-chip'; b.dataset.v=o.k; b.textContent=nm(o);
-    b.addEventListener('click',function(){ toggle(S.topics,o.k); syncScreen(); }); g.appendChild(b); }); }
 function showRow(s){
   var b=document.createElement('button'); b.className='pd-show'; b.dataset.v=s.k;
   b.innerHTML='<img src="'+img(s.k)+'" alt=""><span class="tx"><b>'+s.n+'</b><span>'+(s.ex?'<em>'+t('sh.excl')+'</em> · ':'')+s.by+'</span></span>'
@@ -997,19 +857,13 @@ function applyStatic(){
   document.documentElement.lang=S.lang;
   document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=t(el.dataset.t); });
   document.querySelectorAll('[data-th]').forEach(function(el){ el.innerHTML=t(el.dataset.th); });
-  buildLangs(); buildTopics(); buildShows(true); buildDashes();
+  buildShows(true); buildDashes();
 }
 
 /* ================= everything downstream reads S ================= */
 function followed(){ return S.follow.filter(function(k){ return SH[k]; }); }
 function syncScreen(){
   var li=L(), pr=PRICE[S.lang];
-  document.querySelectorAll('#langList .pd-row').forEach(function(b){ b.classList.toggle('on', S.langs.indexOf(b.dataset.v)>-1); });
-  document.getElementById('langBtn').disabled=!S.langs.length;
-  document.querySelectorAll('[data-id=type] .pd-type').forEach(function(b){ b.classList.toggle('on', S.types.indexOf(b.dataset.v)>-1); });
-  document.getElementById('typeBtn').disabled=!S.types.length;
-  document.querySelectorAll('#topicList .pd-chip').forEach(function(b){ b.classList.toggle('on', S.topics.indexOf(b.dataset.v)>-1); });
-  document.getElementById('topBtn').disabled=!S.topics.length;
   buildShows();
   document.querySelectorAll('#showTabs button').forEach(function(b){ b.classList.toggle('on', b.dataset.tab===S.tab); });
   document.querySelectorAll('#showList .pd-show').forEach(function(b){ b.classList.toggle('on', S.follow.indexOf(b.dataset.v)>-1); });
@@ -1056,15 +910,14 @@ function syncScreen(){
 }
 
 /* ================= router ================= */
-var ORDER=['welcome','lang','type','topics','shows','notif','loader','paywall','offer','account'];
-var LABEL={welcome:'Welcome',lang:'Languages',type:'Podcasts / audiobooks',topics:'Topics',shows:'Shows to follow',notif:'Notifications',loader:'Loader',paywall:'Paywall',offer:'Offer on skip',account:'Account'};
+var ORDER=['welcome','shows','loader','paywall','offer','account'];
+var LABEL={welcome:'Welcome',shows:'Shows to follow',loader:'Loader',paywall:'Paywall',offer:'Offer on skip',account:'Account'};
 var scr={}, hist=[], cur='welcome', loadTimers=[];
 document.querySelectorAll('.scr').forEach(function(s){ scr[s.dataset.id]=s; });
 
 function chrome(){ var lt=S.theme==='light';
   document.getElementById('sbar').classList.toggle('dk',lt); document.getElementById('homebar').classList.toggle('dk',lt); }
 function enter(id){ chrome(); paintChips(); paintPanel(); clearLoad();
-  document.getElementById('ntAlert').classList.remove('show');
   if(id==='loader') runLoader(); }
 function isSheet(k){ return scr[k].classList.contains('sheet'); }
 function go(id,opts){
@@ -1126,10 +979,7 @@ function runLoader(){
 /* ================= wiring ================= */
 document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click',function(){ if(!b.disabled) go(b.dataset.go); }); });
 document.querySelectorAll('[data-back]').forEach(function(b){ b.addEventListener('click',back); });
-document.querySelectorAll('[data-id=type] .pd-type').forEach(function(b){ b.addEventListener('click',function(){ toggle(S.types,b.dataset.v);
-  if(S.types.length===1) S.tab=S.types[0]; syncScreen(); }); });
 document.querySelectorAll('#showTabs button').forEach(function(b){ b.addEventListener('click',function(){ S.tab=b.dataset.tab; syncScreen(); }); });
-document.getElementById('ntBtn').addEventListener('click',function(){ document.getElementById('ntAlert').classList.add('show'); });
 document.getElementById('payClose').addEventListener('click',function(){ go('offer'); });
 document.getElementById('payCta').addEventListener('click',function(){ go('account'); });
 document.getElementById('offerCta').addEventListener('click',function(){ go('account'); });
@@ -1168,16 +1018,10 @@ function startDemo(){
     try{
       cap('A new install opens on Get started — no account yet.'); await pause(1500,tok);
       await tap('#welBtn',tok);
-      cap('Your language question, unchanged.'); await pause(600,tok);
-      await tap('#langList [data-v=da]',tok); await pause(300,tok); await tap('#langBtn',tok);
-      cap('Podcasts, audiobooks, or both.'); await pause(550,tok);
-      await tap('#typeBtn',tok);
-      cap('Five topics. Say, true crime.'); await pause(550,tok);
-      await tap('#topicList [data-v=crime]',tok); await pause(300,tok); await tap('#topBtn',tok);
-      cap('Shows for those topics come first. They follow one.'); await pause(700,tok);
-      await tap('#showList [data-v=whitexican]',tok); await pause(450,tok); await tap('#showBtn',tok);
-      cap('Your notification ask, where it is today.'); await pause(550,tok);
-      await tap('#ntBtn',tok); await pause(250,tok); await tap('#ntAllow',tok);
+      cap('Their topics and languages are already in. Shows for those topics come first.'); await pause(1300,tok);
+      await tap('#showList [data-v=whitexican]',tok); await pause(450,tok);
+      cap('They switch to audiobooks and add one more.'); await tap('#showTabs [data-tab=book]',tok); await pause(500,tok);
+      await tap('#showList [data-v=escobar]',tok); await pause(500,tok); await tap('#showBtn',tok);
       cap('Your loader, now before the price, naming their answers.'); await pause(2500,tok);
       cap('The paywall opens on the shows they just followed, with your 4.7 and 1 million listeners.'); await pause(2600,tok);
       cap('They skip. One sheet: Free vs Premium, and the exact day they would pay.'); await tap('#payClose',tok); await pause(2400,tok);
@@ -1199,16 +1043,8 @@ welcome:{n:2,t:'Ask for the account after the paywall',
  hyp:'Try opening on Get started instead of four sign-in buttons, <b>because today Apple, Google, Facebook or email — then email, name and password on three more screens — all come before anyone has heard a single show</b>.',
  kept:'Your floating cover collage, your welcome line word for word, your purple pill. Returning members still have Log in.',
  out:'CR +8% · ARPU +17%'},
-lang:{ctx:true,t:'Which languages do you listen to?',
- kept:'Untouched — your list rows with the circle that turns into a purple tick, Spanish first, and the Search pill docked next to Continue. The languages they pick are now read back on the loader.'},
-type:{ctx:true,t:'What are you into?',
- kept:'Untouched — your two cover cards with the purple check. If they pick only one, the next screen opens on that tab.'},
-topics:{ctx:true,t:'Pick five topics',
- kept:'Untouched — your pill chips that fill purple, all thirteen topics in your order. The topics now sort the next screen and appear on the loader.'},
 shows:{ctx:true,t:'The most popular podcasts and audiobooks',
- kept:'Your Podcasts / Audiobooks tabs, your rows with “Exclusive”, the plus that turns into a check and the “2 added - Continue” button. Shows that match their topics are listed first, and the ones they follow go on to the paywall.'},
-notif:{ctx:true,t:'Never miss an episode',
- kept:'Your heart-and-square illustration, your copy, Enable, the skip arrow and the system prompt, in the same place as today.'},
+ kept:'Your Podcasts / Audiobooks tabs, your rows with “Exclusive”, the plus that turns into a check and the “2 added - Continue” button. Shows that match their topics are listed first, and the ones they follow go on to the loader and the paywall. Your language, podcasts-or-audiobooks, topics and notification screens stay exactly as they are and are left out of this prototype; their answers are already filled in.'},
 loader:{n:4,t:'Run your loader before the price, not after',
  hyp:'Try playing your setup loader in front of the paywall and letting each line name what it is using, <b>because today the same loader runs after purchase, when it can no longer help anyone decide</b>. Change a language or follow another show and these lines change.',
  kept:'Your tilted covers floating on black and your tick list — Adjusting language, Gathering your interests, Wrapping things up. The covers are the shows they followed.',
