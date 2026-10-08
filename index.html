@@ -201,7 +201,7 @@ a{color:inherit}
 .pd-btn:hover{filter:brightness(1.08)}
 .pd-btn[disabled]{background:var(--pd-btn-off);color:rgba(255,255,255,.55);cursor:default;filter:none}
 .pd-helper{font-size:12.5px;line-height:1.4;color:var(--pd-sub);text-align:center;margin:0 0 12px}
-.pd-link{display:block;width:100%;margin-top:14px;font:500 14px/1 'Inter',sans-serif;color:var(--pd-sub)}
+.pd-link{display:block;width:100%;margin-top:14px;text-align:center;font:500 14px/1 'Inter',sans-serif;color:var(--pd-sub)}
 .pd-link b{color:var(--pd-ink);font-weight:600}
 
 /* welcome — their floating cover collage */
@@ -651,7 +651,7 @@ a{color:inherit}
   </div>
   <div class="scr-foot">
     <button class="pd-btn" id="welBtn" data-go="lang" data-t="wel.cta"></button>
-    <button class="pd-link" data-th="wel.login"></button>
+    <p class="pd-link pd-centre" data-th="wel.login"></p>
   </div>
 </section>
 
@@ -1066,14 +1066,16 @@ function chrome(){ var lt=S.theme==='light';
 function enter(id){ chrome(); paintChips(); paintPanel(); clearLoad();
   document.getElementById('ntAlert').classList.remove('show');
   if(id==='loader') runLoader(); }
+function isSheet(k){ return scr[k].classList.contains('sheet'); }
 function go(id,opts){
   opts=opts||{}; if(id===cur) return;
   var from=scr[cur], to=scr[id];
   if(!opts.back) hist.push(cur);
-  if(from){ from.classList.remove('is-active');
-    if(!to.classList.contains('sheet') && !from.classList.contains('sheet')) from.classList.add('is-past'); }
-  if(to.classList.contains('sheet')) from.classList.add('is-active');
-  Object.keys(scr).forEach(function(k){ if(k!==id && !(to.classList.contains('sheet') && k===cur)) scr[k].classList.remove('is-active'); });
+  if(!isSheet(id)){
+    /* leaving: the current screen, and the one under it if we are on a sheet */
+    Object.keys(scr).forEach(function(k){ if(k===id || !scr[k].classList.contains('is-active')) return;
+      scr[k].classList.remove('is-active'); if(!isSheet(k)) scr[k].classList.add('is-past'); });
+  }
   to.classList.remove('is-past'); to.classList.add('is-active');
   cur=id; enter(id);
 }
@@ -1081,6 +1083,8 @@ function back(){
   if(!hist.length) return;
   var prev=hist.pop();
   scr[cur].classList.remove('is-active');
+  if(isSheet(prev) && hist.length){ var under=scr[hist[hist.length-1]]; under.classList.add('nofx'); under.classList.remove('is-past'); under.classList.add('is-active');
+    requestAnimationFrame(function(){ under.classList.remove('nofx'); }); }
   scr[prev].classList.remove('is-past'); scr[prev].classList.add('is-active');
   cur=prev; enter(prev);
 }
